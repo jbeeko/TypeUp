@@ -13,7 +13,6 @@ type Address = {
     City: String; Region: String;
     Country: String;
     }
-Type.GetTypeCode(typeof<Address>)
 
 type Jurisdiction = 
     | BC
@@ -37,6 +36,32 @@ type Contract = {
     Provider : Person;
     Holder : Person;
     }
+
+let constructed : Contract = 
+    {Number = 34343L;
+    ID = Guid.Parse  "872ccb13-2e12-4eec-a2f5-ab64b3652b1c";
+    Start = DateTime.Parse "2009-05-01";
+    Jurisdiction = BC;
+    Provider = 
+        {Name = "Bill Smith";
+        DOB = DateTime.Parse "1988-01-20";
+        eMail = MailAddress.Parse "bill@co.com";
+        WebSite = Uri.Parse "http://www.bill.com";
+        Address =
+            {Street = "245 West Howe";
+            City = "Vancouver";
+            Region = "BC";
+            Country = "Canada" }};
+    Holder =
+        {Name = "Anne Brown";
+        DOB = DateTime.Parse "1998-10-25";
+        eMail = MailAddress.Parse "anne@co.com";
+        WebSite = Uri.Parse "http://www.anne.com";
+        Address =
+            {Street = "5553 West 12th Ave";
+            City = "Vancouver";
+            Region = "BC";
+            Country = "Canada" }}}
 
 let test p str =
     match run p str with
@@ -75,30 +100,4 @@ Holder:
         Country: Canada"
 
 let parsed = test pcontract contractData
-let constructed : Contract = 
-    {Number = 34343L;
-    ID = Guid.Parse  "872ccb13-2e12-4eec-a2f5-ab64b3652b1c";
-    Start = DateTime.Parse "2009-05-01";
-    Jurisdiction = BC;
-    Provider = 
-        {Name = "Bill Smith";
-        DOB = DateTime.Parse "1988-01-20";
-        eMail = MailAddress.Parse "bill@co.com";
-        WebSite = Uri.Parse "http://www.bill.com";
-        Address =
-            {Street = "245 West Howe";
-            City = "Vancouver";
-            Region = "BC";
-            Country = "Canada" }};
-    Holder =
-        {Name = "Anne Brown";
-        DOB = DateTime.Parse "1998-10-25";
-        eMail = MailAddress.Parse "anne@co.com";
-        WebSite = Uri.Parse "http://www.anne.com";
-        Address =
-            {Street = "5553 West 12th Ave";
-            City = "Vancouver";
-            Region = "BC";
-            Country = "Canada" }}}
-
 parsed = constructed
