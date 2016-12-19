@@ -8,8 +8,6 @@ open System.Net
 open System.Net.Mail
 open FSONParser
 
-
-
 type Address = {
     Street: String;
     City: String; Region: String;
@@ -74,6 +72,7 @@ Holder:
         Region: BC
         Country: Canada"
 
-test pcontract contractData
+let contract = test pcontract contractData
+
 
 
