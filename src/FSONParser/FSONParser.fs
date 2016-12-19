@@ -66,20 +66,16 @@ and precord (aType : Type) : Parser<obj,unit> =
         |> Array.reduce (fun p1 p2 -> pipe2 p1 p2 List.append)
         |>> makeType
 
-and punionname  (t: Type) : Parser<_,_> =
+and punioncase  (t: Type) : Parser<_,_> =
     let parsers = 
         FSharpType.GetUnionCases t 
-        |> Array.map (fun c -> spaces>>.pstring c.Name.>>spaces)
+        |> Array.map (fun c -> spaces>>.pstring c.Name.>>spaces>>%c)
     choiceL parsers (sprintf "Expecting a case of %s" t.Name)
 
 and punion (t : Type) : Parser<obj,unit> =
-    let makeType name = 
-        let case = 
-            FSharpType.GetUnionCases t
-            |> Array.find (fun (c) -> c.Name = name)
-        //case.
+    let makeType case = 
         FSharpValue.MakeUnion(case, [||])
-    punionname t |>> makeType
+    punioncase t |>> makeType
 
 and ptype(t : Type) : Parser<obj,unit> =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
