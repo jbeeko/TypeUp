@@ -87,11 +87,12 @@ and ptype(t : Type) : Parser<obj,unit> =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
     let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
     let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
+    let (|URL|_|) t = if t = typeof<Uri> then Some(t) else None        
     let (|GUID|_|) t = if t = typeof<Guid> then Some(t) else None        
     let (|Primative|_|) t = if Type.GetTypeCode(t) <> TypeCode.Object then Some(t) else None
 
     match t with
     | Record t -> precord t
     | Union t -> punion t
-    | EMail t | GUID t | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
+    | EMail t | GUID t | Primative t | URL t -> mayThrow(restOfLine false |>> (primFromString t))
     | _ -> fail "Unsupported type"

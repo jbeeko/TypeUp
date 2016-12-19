@@ -25,8 +25,8 @@ type Person = {
     DOB : DateTime;
     eMail : MailAddress;
     //Phone : Phone;
+    WebSite : Uri
     Address : Address;
-    //url : Uri option
     }
 
 type Contract = {
@@ -57,6 +57,7 @@ Provider:
     Name: Bill Smith
     DOB: 1988-01-20
     eMail: bill@co.com
+    WebSite: http://www.bill.com
     Address: 
         Street: 245 West Howe
         City: Vancouver 
@@ -66,6 +67,7 @@ Holder:
     Name: Anne Brown
     DOB: 1998-10-25
     eMail: anne@co.com
+    WebSite: http://www.anne.com
     Address:
         Street: 5553 West 12th Ave
         City: Vancouver 
@@ -73,6 +75,5 @@ Holder:
         Country: Canada"
 
 let contract = test pcontract contractData
-
 
 
