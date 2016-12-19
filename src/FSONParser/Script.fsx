@@ -9,6 +9,13 @@ open System.Net
 open System.Net.Mail
 open FSONParser
 
+type Phone =
+    | Mobile of String*String
+    | Office of area : String * local : String
+    | Home of String
+    | AfterHours of String 
+    | Other of String
+
 type Address = {
     Street: String;
     City: String; Region: String;
@@ -107,3 +114,9 @@ Holder:
 
 let parsed = test pcontract contractData
 parsed = constructed
+
+// Phone.Mobile ("1212","605")
+// Phone.Office (area = "asd", local = "asdf")
+
+// let case = (FSharpType.GetUnionCases typeof<Phone>).[0]
+// (case.GetFields()).[0]

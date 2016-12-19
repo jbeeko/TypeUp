@@ -52,8 +52,7 @@ let primFromString (t:  Type) (str: String)  : obj =
 let rec pfieldTag (field: Reflection.PropertyInfo) : Parser<_,_> =
     spaces>>.
     pstring field.Name >>.
-    spaces>>.pchar ':'>>.
-    spaces
+    pchar ':'
 
 and pfield (field: Reflection.PropertyInfo) : Parser<obj,unit> =
     pfieldTag field>>.
@@ -63,25 +62,25 @@ and precord (aType : Type) : Parser<obj,unit> =
     let makeType vals = 
         FSharpValue.MakeRecord(aType, List.toArray vals)
 
-    let pvalues = 
-        FSharpType.GetRecordFields (aType)
+    FSharpType.GetRecordFields (aType)
         |> Array.map (fun f -> (pfield f) |>> List.singleton)
         |> Array.reduce (fun p1 p2 -> pipe2 p1 p2 List.append)
-    spaces>>.pvalues |>> makeType
+        |>> makeType
 
-and puniontag  (t: Type) : Parser<_,_> =
+and punionname  (t: Type) : Parser<_,_> =
     let parsers = 
         FSharpType.GetUnionCases t 
         |> Array.map (fun c -> spaces>>.pstring c.Name.>>spaces)
     choiceL parsers (sprintf "Expecting a case of %s" t.Name)
 
 and punion (t : Type) : Parser<obj,unit> =
-    let makeType tag = 
+    let makeType name = 
         let case = 
             FSharpType.GetUnionCases t
-            |> Array.find (fun (c) -> c.Name = tag)
+            |> Array.find (fun (c) -> c.Name = name)
+        //case.
         FSharpValue.MakeUnion(case, [||])
-    puniontag t |>> makeType
+    punionname t |>> makeType
 
 and ptype(t : Type) : Parser<obj,unit> =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
@@ -92,6 +91,7 @@ and ptype(t : Type) : Parser<obj,unit> =
     let (|IP|_|) t = if t = typeof<IPAddress> then Some(t) else None        
     let (|Primative|_|) t = if Type.GetTypeCode(t) <> TypeCode.Object then Some(t) else None
 
+    spaces >>.
     match t with
     | Record t -> precord t
     | Union t -> punion t
