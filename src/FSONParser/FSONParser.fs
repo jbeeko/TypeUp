@@ -89,11 +89,12 @@ and ptype(t : Type) : Parser<obj,unit> =
     let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
     let (|URL|_|) t = if t = typeof<Uri> then Some(t) else None        
     let (|GUID|_|) t = if t = typeof<Guid> then Some(t) else None        
+    let (|IP|_|) t = if t = typeof<IPAddress> then Some(t) else None        
     let (|Primative|_|) t = if Type.GetTypeCode(t) <> TypeCode.Object then Some(t) else None
 
     match t with
     | Record t -> precord t
     | Union t -> punion t
-    | EMail t | GUID t | URL t 
+    | EMail t | GUID t | URL t | IP t
     | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
     | _ -> fail "Unsupported type"

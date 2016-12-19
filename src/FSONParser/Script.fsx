@@ -25,7 +25,8 @@ type Person = {
     DOB : DateTime;
     eMail : MailAddress;
     //Phone : Phone;
-    WebSite : Uri
+    WebSite : Uri;
+    IP : IPAddress;
     Address : Address;
     }
 
@@ -48,6 +49,7 @@ let constructed : Contract =
         DOB = DateTime.Parse "1988-01-20";
         eMail = MailAddress.Parse "bill@co.com";
         WebSite = Uri.Parse "http://www.bill.com";
+        IP = IPAddress.Parse "127.0.0.1";
         Address =
             {Street = "245 West Howe";
             City = "Vancouver";
@@ -58,6 +60,7 @@ let constructed : Contract =
         DOB = DateTime.Parse "1998-10-25";
         eMail = MailAddress.Parse "anne@co.com";
         WebSite = Uri.Parse "http://www.anne.com";
+        IP = IPAddress.Parse "2001:0:9d38:6abd:2c48:1e19:53ef:ee7e";
         Address =
             {Street = "5553 West 12th Ave";
             City = "Vancouver";
@@ -84,6 +87,7 @@ Provider:
     DOB: 1988-01-20
     eMail: bill@co.com
     WebSite: http://www.bill.com
+    IP: 127.0.0.1
     Address: 
         Street: 245 West Howe
         City: Vancouver
@@ -94,6 +98,7 @@ Holder:
     DOB: 1998-10-25
     eMail: anne@co.com
     WebSite: http://www.anne.com
+    IP: 2001:0:9d38:6abd:2c48:1e19:53ef:ee7e
     Address:
         Street: 5553 West 12th Ave
         City: Vancouver
