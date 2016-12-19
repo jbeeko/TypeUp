@@ -94,5 +94,6 @@ and ptype(t : Type) : Parser<obj,unit> =
     match t with
     | Record t -> precord t
     | Union t -> punion t
-    | EMail t | GUID t | Primative t | URL t -> mayThrow(restOfLine false |>> (primFromString t))
+    | EMail t | GUID t | URL t 
+    | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
     | _ -> fail "Unsupported type"
