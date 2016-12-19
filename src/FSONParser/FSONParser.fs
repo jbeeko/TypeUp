@@ -50,7 +50,6 @@ let primFromString (t:  Type) (str: String)  : obj =
     |_ -> failwith "Unsupported primative type"
 
 let rec pfieldTag (field: Reflection.PropertyInfo) : Parser<_,_> =
-    spaces>>.
     pstring field.Name >>.
     pchar ':'
 
@@ -63,7 +62,7 @@ and precord (aType : Type) : Parser<obj,unit> =
         FSharpValue.MakeRecord(aType, List.toArray vals)
 
     FSharpType.GetRecordFields (aType)
-        |> Array.map (fun f -> (pfield f) |>> List.singleton)
+        |> Array.map (fun f -> (pfield f.>>spaces) |>> List.singleton)
         |> Array.reduce (fun p1 p2 -> pipe2 p1 p2 List.append)
         |>> makeType
 
