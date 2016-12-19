@@ -27,7 +27,9 @@ type MailAddress with
 type Uri with
     static member Parse str = Uri(str)
 
-let primTypeFromString (t:  Type) (str: String)  : obj =
+let primFromString (t:  Type) (str: String)  : obj =
+    //this does not seem to work
+    //t.GetMethod("Parse", [|typeof<string>|]).Invoke(t, [|str|]) |> box
     match t.FullName with
     |"System.Int16" -> Int16.Parse(str) |> box
     |"System.Int32" -> Int32.Parse(str) |> box
@@ -50,27 +52,7 @@ let primTypeFromString (t:  Type) (str: String)  : obj =
     |"System.Net.Mail.MailAddress" -> MailAddress.Parse str |> box
     |_ -> failwith "Unsupported primative type"
 
-let primFromString (t: Type) (str: string) : obj =
-    //this does not work for some reasion
-    //t.GetMethod("Parse", [|typeof<string>|]).Invoke(t, [|str|]) |> box
-    primTypeFromString t str
-
-let rec pfieldValue(t : Type) : Parser<obj,unit> =
-    let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
-    let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
-    let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
-    let (|GUID|_|) t = if t = typeof<Guid> then Some(t) else None        
-    let (|Primative|_|) t = if Type.GetTypeCode(t) <> TypeCode.Object then Some(t) else None
-
-    match t with
-    | Record t -> precord t
-    | Union t -> punion t
-    | EMail t -> mayThrow(restOfLine false |>> (primFromString t))
-    | GUID t -> mayThrow(restOfLine false |>> (primFromString t))
-    | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
-    | _ -> fail "Unsupported object type"
-
-and pfieldTag (field: Reflection.PropertyInfo) : Parser<_,_> =
+let rec pfieldTag (field: Reflection.PropertyInfo) : Parser<_,_> =
     spaces>>.
     pstring field.Name >>.
     spaces>>.pchar ':'>>.
@@ -78,7 +60,7 @@ and pfieldTag (field: Reflection.PropertyInfo) : Parser<_,_> =
 
 and pfield (field: Reflection.PropertyInfo) : Parser<obj,unit> =
     pfieldTag field>>.
-    pfieldValue field.PropertyType
+    ptype field.PropertyType
 
 and precord (aType : Type) : Parser<obj,unit> =
     let makeType vals = 
@@ -102,15 +84,24 @@ and punion (t : Type) : Parser<obj,unit> =
             FSharpType.GetUnionCases t
             |> Array.find (fun (c) -> c.Name = tag)
         FSharpValue.MakeUnion(case, [||])
-
     puniontag t |>> makeType
 
-and ptype (aType : Type) : Parser<_,_> =
-    if FSharpType.IsRecord aType then
-       precord aType 
-    else
-        fun stream ->
-            Reply(Error, expectedString "A Record")
+and ptype(t : Type) : Parser<obj,unit> =
+    let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
+    let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
+    let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
+    let (|GUID|_|) t = if t = typeof<Guid> then Some(t) else None        
+    let (|Primative|_|) t = if Type.GetTypeCode(t) <> TypeCode.Object then Some(t) else None
+
+    match t with
+    | Record t -> precord t
+    | Union t -> punion t
+    | EMail t -> mayThrow(restOfLine false |>> (primFromString t))
+    | GUID t -> mayThrow(restOfLine false |>> (primFromString t))
+    | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
+    | _ -> fail "Unsupported type"
+
+
 
 //======================= TESTING ======================================
 
@@ -143,43 +134,10 @@ type Contract = {
     Holder : Person;
     }
 
-let paddress : Parser<Address,unit> = 
-    let toAddress (anObj : obj) : Address =
-        anObj :?> Address
-    ptype typeof<Address> |>> toAddress
-
 let test p str =
     match run p str with
     | Success(result, _, _)   -> printfn "Success: %A of type %O" result result.GetType
     | Failure(errorMsg, _, _) -> printfn "Failure: %s" errorMsg
-let addressData = "
-Street: 245 West Howe
-City: Vancouver
-Region: BC
-Country: Canada
-"
-
-test (ptype typeof<Address>) addressData
-test paddress addressData
-
-let pperson : Parser<Person,unit> = 
-    let toPerson (anObj : obj) : Person =
-        anObj :?> Person
-    ptype typeof<Person> |>> toPerson
-
-let personData = "
-Name: Bill Smith
-DOB: 1988-01-20
-eMail: bill@co.com
-Address: 
-    Street: 245 West Howe
-    City: Vancouver 
-    Region: BC
-    Country: Canada"
-
-test (ptype typeof<Person>) personData
-test pperson personData
-
 
 let pcontract : Parser<Contract,unit> = 
     let toType (anObj : obj) : Contract =
