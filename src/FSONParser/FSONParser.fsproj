@@ -42,11 +42,10 @@
   <ItemGroup>
     <Compile Include="FSONParser.fs" />
     <None Include="Script.fsx" />
-    <Compile Include="TagParserExample.fsx" />
-    <Compile Include="IndentParserExample.fsx" />
-    <Compile Include="ReflectionExample.fsx" />
-    <Compile Include="ProofOfConcept.fsx" />
-    <Compile Include="MiscParsers.fsx" />
+    <None Include="TagParserExample.fsx" />
+    <None Include="IndentParserExample.fsx" />
+    <None Include="ProofOfConcept.fsx" />
+    <None Include="MiscParsers.fsx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Choose>
