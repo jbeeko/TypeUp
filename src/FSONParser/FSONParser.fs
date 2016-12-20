@@ -75,11 +75,11 @@ and punioninfo  (t: Type) : Parser<_,_> =
 and punioncase  (c: UnionCaseInfo) : Parser<_,_> =
     let makeType case args = 
         FSharpValue.MakeUnion(case, args)
-
-    c.GetFields()
-        |> Array.map (fun f -> (ptype f.PropertyType.>>spaces) |>> Array.singleton)
-        |> Array.reduce (fun p1 p2 -> pipe2 p1 p2 Array.append)
-        |>> makeType(c)
+    let initial : Parser<obj[], unit> = preturn [||]
+    let vals = c.GetFields()
+            |> Array.map (fun f -> (ptype f.PropertyType.>>spaces) |>> Array.singleton)
+            |> Array.fold (fun p1 p2 -> pipe2 p1 p2 Array.append) initial
+    vals |>> makeType c
 
 and punion (t : Type) : Parser<obj,unit> =
     punioninfo t >>= punioncase 

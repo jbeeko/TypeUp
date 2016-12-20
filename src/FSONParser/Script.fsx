@@ -31,19 +31,32 @@ type Person = {
     Name : string;
     DOB : DateTime;
     eMail : MailAddress;
-    //Phone : Phone;
+    Phone : Phone;
     WebSite : Uri;
     IP : IPAddress;
     Address : Address;
     }
+
+type Company = {
+        name: String;
+        phones: Phone list;
+        site: Uri option;
+        incorpLoc: Jurisdiction;
+        //beneficialOwners: LegalEntity list;
+    }
+
+type LegalEntity = 
+    | Person of Person
+    | Company of Company
+    | Tag of String
 
 type Contract = {
     Number : Int64;
     ID : Guid;
     Start : DateTime;
     Jurisdiction : Jurisdiction;
-    Provider : Person;
-    Holder : Person;
+    Provider : LegalEntity;
+    Holder : LegalEntity;
     }
 
 let constructed : Contract = 
@@ -52,9 +65,10 @@ let constructed : Contract =
     Start = DateTime.Parse "2009-05-01";
     Jurisdiction = BC;
     Provider = 
-        {Name = "Bill Smith";
+        Person {Name = "Bill Smith";
         DOB = DateTime.Parse "1988-01-20";
         eMail = MailAddress.Parse "bill@co.com";
+        Phone = Mobile "604 666 7777";
         WebSite = Uri.Parse "http://www.bill.com";
         IP = IPAddress.Parse "127.0.0.1";
         Address =
@@ -63,9 +77,10 @@ let constructed : Contract =
             Region = "BC";
             Country = "Canada" }};
     Holder =
-        {Name = "Anne Brown";
+        Person {Name = "Anne Brown";
         DOB = DateTime.Parse "1998-10-25";
         eMail = MailAddress.Parse "anne@co.com";
+        Phone = Office "604 666 8888";
         WebSite = Uri.Parse "http://www.anne.com";
         IP = IPAddress.Parse "2001:0:9d38:6abd:2c48:1e19:53ef:ee7e";
         Address =
@@ -93,6 +108,7 @@ Provider:
     Name: Bill Smith
     DOB: 1988-01-20
     eMail: bill@co.com
+    Phone: Mobile 604 666 7777
     WebSite: http://www.bill.com
     IP: 127.0.0.1
     Address: 
@@ -104,6 +120,7 @@ Holder:
     Name: Anne Brown
     DOB: 1998-10-25
     eMail: anne@co.com
+    Phone: Office 604 666 8888
     WebSite: http://www.anne.com
     IP: 2001:0:9d38:6abd:2c48:1e19:53ef:ee7e
     Address:
