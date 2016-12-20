@@ -19,7 +19,7 @@ type FSharpType with
     static member IsOption (t : Type) = t.FullName = "FSharpOption`1"
 
 type FSharpType with
-    static member IsList (t : Type) = t.FullName = "FSharpList`1"
+    static member IsList (t : Type) = t.Name = "FSharpList`1"
 
 type MailAddress with
     static member Parse str = MailAddress(str)
@@ -93,12 +93,14 @@ and plist (t : Type) : Parser<obj, unit> =
     // let sixtype = (six.GetType())
     // sixtype.GenericTypeArguments
 
-    let initial : obj[] = [||] 
+    let initial : string list = [] 
     preturn (box initial)
 
 and ptype(t : Type) : Parser<obj,unit> =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
     let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
+    let (|List|_|) t = if FSharpType.IsList(t) then Some(t) else None
+    
     let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
     let (|URL|_|) t = if t = typeof<Uri> then Some(t) else None        
     let (|GUID|_|) t = if t = typeof<Guid> then Some(t) else None        
@@ -109,6 +111,8 @@ and ptype(t : Type) : Parser<obj,unit> =
     match t with
     | EMail t | GUID t | URL t | IP t
     | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
+    
+    | List t -> plist t
     | Record t -> precord t
     | Union t -> punion t
     | _ -> fail "Unsupported type"

@@ -36,7 +36,7 @@ type Person = {
     Phone : Phone;
     WebSite : Uri;
     IP : IPAddress;
-    //Occupations : Occupation list;
+    Occupations : String list;
     Address : Address;
     }
 
