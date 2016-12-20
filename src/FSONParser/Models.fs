@@ -36,13 +36,13 @@ type Person = {
     Phone : Phone;
     WebSite : Uri;
     IP : IPAddress;
-//    Occupations : Occupation list;
+    //Occupations : Occupation list;
     Address : Address;
     }
 
 and Company = {
         Name: String;
-//        phones: Phone list;
+        //Phones: Phone list;
         WebSite: Uri;
         IncorporationLoc: Jurisdiction;
         BeneficialOwner: LegalEntity;

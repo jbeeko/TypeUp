@@ -18,6 +18,7 @@ let test p str =
 let contractData = File.ReadAllText("./src/FSONParser/SampleData.fson")
 
 let parsed = test (ptype typeof<Contract> |>> (fun anObj -> anObj :?> Contract)) contractData
+
 parsed = SampleModels.constructed
 parsed.Jurisdiction = BC
 match parsed.Holder with
