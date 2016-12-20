@@ -88,7 +88,13 @@ and punion (t : Type) : Parser<obj,unit> =
     punioninfo t >>= punioncase 
 
 and plist (t : Type) : Parser<obj, unit> =
-    //sixtype.GenericTypeArguments
+    // let foo = List.singleton "foo"
+    // let six = List.singleton 6
+
+    // foo.GetType()
+    // let sixtype = (six.GetType())
+    // sixtype.GenericTypeArguments
+
     let initial : obj[] = [||] 
     preturn (box initial)
 
