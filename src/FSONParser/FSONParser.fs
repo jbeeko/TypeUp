@@ -28,8 +28,6 @@ type Uri with
     static member Parse str = Uri(str)
 
 let primFromString (t:  Type) (str: String)  : obj =
-    //this does not seem to work
-    //t.GetMethod("Parse", [|typeof<string>|]).Invoke(t, [|str|]) |> box
     match t.FullName with
     |"System.Int16" -> Int16.Parse(str) |> box
     |"System.Int32" -> Int32.Parse(str) |> box
@@ -114,7 +112,4 @@ and ptype(t : Type) : Parser<obj,unit> =
     | Record t -> precord t
     | Union t -> punion t
     | _ -> fail "Unsupported type"
-
-
-
-
+    
