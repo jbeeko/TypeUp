@@ -103,10 +103,10 @@ and ptype(t : Type) : Parser<obj,unit> =
 
     spaces >>.
     match t with
-    | Record t -> precord t
-    | Union t -> punion t
     | EMail t | GUID t | URL t | IP t
     | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
+    | Record t -> precord t
+    | Union t -> punion t
     | _ -> fail "Unsupported type"
 
 
