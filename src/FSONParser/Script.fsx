@@ -114,9 +114,3 @@ Holder:
 
 let parsed = test pcontract contractData
 parsed = constructed
-
-// Phone.Mobile ("1212","605")
-// Phone.Office (area = "asd", local = "asdf")
-
-// let case = (FSharpType.GetUnionCases typeof<Phone>).[0]
-// (case.GetFields()).[0]
