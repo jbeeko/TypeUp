@@ -18,6 +18,9 @@ let mayThrow (p: Parser<'t,'u>) : Parser<'t,'u> =
 type FSharpType with
     static member IsOption (t : Type) = t.FullName = "FSharpOption`1"
 
+type FSharpType with
+    static member IsList (t : Type) = t.FullName = "FSharpList`1"
+
 type MailAddress with
     static member Parse str = MailAddress(str)
 
@@ -83,6 +86,11 @@ and punioncase  (c: UnionCaseInfo) : Parser<_,_> =
 
 and punion (t : Type) : Parser<obj,unit> =
     punioninfo t >>= punioncase 
+
+and plist (t : Type) : Parser<obj, unit> =
+    //sixtype.GenericTypeArguments
+    let initial : obj[] = [||] 
+    preturn (box initial)
 
 and ptype(t : Type) : Parser<obj,unit> =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
