@@ -105,7 +105,7 @@ ID:  872ccb13-2e12-4eec-a2f5-ab64b3652b1c
 Start: 2009-05-01
 Jurisdiction: BC
 Provider:
-    Name: Bill Smith
+    Person Name: Bill Smith
     DOB: 1988-01-20
     eMail: bill@co.com
     Phone: Mobile 604 666 7777
@@ -117,7 +117,7 @@ Provider:
         Region: BC
         Country: Canada
 Holder: 
-    Name: Anne Brown
+    Person Name: Anne Brown
     DOB: 1998-10-25
     eMail: anne@co.com
     Phone: Office 604 666 8888
