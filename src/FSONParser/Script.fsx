@@ -123,7 +123,7 @@ Provider:
     Company Name: Acme Widgets
     WebSite: http://www.acme.com
     IncorporationLoc: BC
-    BeneficalOwner:
+    BeneficialOwner:
         Person Name: Bill Smith
         DOB: 1988-01-20
         eMail: bill@co.com
