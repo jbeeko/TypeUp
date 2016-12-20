@@ -10,8 +10,8 @@ open System.Net.Mail
 open FSONParser
 
 type Phone =
-    | Mobile of String*String
-    | Office of area : String * local : String
+    | Mobile of String
+    | Office of String
     | Home of String
     | AfterHours of String 
     | Other of String
@@ -114,3 +114,5 @@ Holder:
 
 let parsed = test pcontract contractData
 parsed = constructed
+
+
