@@ -6,6 +6,14 @@ open FSharp.Reflection
 open System.Net
 open System.Net.Mail
 
+module List =
+    let empty ty = 
+        let uc = 
+            Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
+            |> Seq.filter (fun uc -> uc.Name = "Empty") 
+            |> Seq.exactlyOne
+        Reflection.FSharpValue.MakeUnion(uc, [||])
+
 let mayThrow (p: Parser<'t,'u>) : Parser<'t,'u> =
     fun stream ->
         let state = stream.State        
@@ -85,15 +93,11 @@ and punioncase  (c: UnionCaseInfo) : Parser<_,_> =
 and punion (t : Type) : Parser<obj,unit> =
     punioninfo t >>= punioncase 
 
+and plistelement (t : Type) : Parser<obj, unit> =
+    spaces>>.pstring "-">>.ptype t
+
 and plist (t : Type) : Parser<obj, unit> =
-    // let foo = List.singleton "foo"
-    // let six = List.singleton 6
-
-    // foo.GetType()
-    // let sixtype = (six.GetType())
-    // sixtype.GenericTypeArguments
-
-    let initial : string list = [] 
+    let initial = List.empty t.GenericTypeArguments.[0]
     preturn (box initial)
 
 and ptype(t : Type) : Parser<obj,unit> =
