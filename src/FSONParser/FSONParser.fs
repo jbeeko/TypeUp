@@ -14,7 +14,7 @@ let empty ty =
     Reflection.FSharpValue.MakeUnion(uc, [||])
 
 
-let mayThrow (p: Parser<'t,'u>) : Parser<'t,'u> =
+let mayThrow (p : Parser<_,_>) : Parser<_,_> =
     fun stream ->
         let state = stream.State        
         try 
@@ -35,11 +35,11 @@ type MailAddress with
 type Uri with
     static member Parse str = Uri(str)
 
-let primFromString (t:  Type) (str: String)  : obj =
+let primFromString (t:  Type) str : obj =
     match t.FullName with
-    |"System.Int16" -> Int16.Parse(str) |> box
-    |"System.Int32" -> Int32.Parse(str) |> box
-    |"System.Int64" -> Int64.Parse(str) |> box
+    |"System.Int16" -> upcast Int16.Parse(str) 
+    |"System.Int32" -> upcast Int32.Parse(str)
+    |"System.Int64" -> upcast Int64.Parse(str) 
     |"System.UInt16" -> UInt16.Parse(str) |> box
     |"System.UInt32" -> UInt32.Parse(str) |> box
     |"System.UInt64" -> UInt64.Parse(str) |> box
@@ -58,30 +58,29 @@ let primFromString (t:  Type) (str: String)  : obj =
     |"System.Net.Mail.MailAddress" -> MailAddress.Parse str |> box
     |_ -> failwith "Unsupported primative type"
 
-let rec pfieldTag (field: Reflection.PropertyInfo) : Parser<_,_> =
-    pstring field.Name >>.
-    pchar ':'
+let rec pfieldName (f: Reflection.PropertyInfo) =
+    pstring f.Name >>.pchar ':'
 
-and pfield (field: Reflection.PropertyInfo) : Parser<obj,unit> =
-    pfieldTag field>>.
-    ptype field.PropertyType
+and pfield f =
+    pfieldName f>>.
+    ptype f.PropertyType
 
-and precord (aType : Type) : Parser<obj,unit> =
+and precord t =
     let makeType vals = 
-        FSharpValue.MakeRecord(aType,  vals)
+        FSharpValue.MakeRecord(t,  vals)
 
-    FSharpType.GetRecordFields (aType)
+    FSharpType.GetRecordFields (t)
         |> Array.map (fun f -> (pfield f.>>spaces) |>> Array.singleton)
         |> Array.reduce (fun p1 p2 -> pipe2 p1 p2 Array.append)
         |>> makeType
 
-and punioninfo  (t: Type) : Parser<_,_> =
+and punioninfo  (t: Type) =
     let parsers = 
         FSharpType.GetUnionCases t 
         |> Array.map (fun c -> spaces>>.pstring c.Name.>>spaces>>%c)
     choiceL parsers (sprintf "Expecting a case of %s" t.Name)
 
-and punioncase  (c: UnionCaseInfo) : Parser<_,_> =
+and punioncase  (c: UnionCaseInfo) =
     let makeType case args = 
         FSharpValue.MakeUnion(case, args)
     let initial : Parser<obj[], unit> = preturn [||]
@@ -90,19 +89,18 @@ and punioncase  (c: UnionCaseInfo) : Parser<_,_> =
             |> Array.fold (fun p1 p2 -> pipe2 p1 p2 Array.append) initial
     vals |>> makeType c
 
-and punion (t : Type) : Parser<obj,unit> =
+and punion (t : Type)  =
     punioninfo t >>= punioncase 
 
-and plistelement (t : Type) : Parser<_, _> =
-
+and plistelement (t : Type) =
     spaces>>.pstring "-">>.ptype t
     
-and plist (t : Type) : Parser<obj, unit> =
+and plist (t : Type) =
     let elementT  = t.GenericTypeArguments |> Seq.exactlyOne
     let initial = empty elementT
     many (plistelement elementT)|>>List.singleton>>%initial|>>box
 
-and ptype(t : Type) : Parser<obj,unit> =
+and ptype(t : Type)  =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
     let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
     let (|List|_|) t = if FSharpType.IsList(t) then Some(t) else None

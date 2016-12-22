@@ -46,7 +46,7 @@ let l : string list = []
 "foo"::l
 List.append l ["foo"]
 
-type Test = {Name : string option}
+//type Test = {Name : string option}
 let f = (FSharpType.GetRecordFields typeof<Test>).[0]
 f.PropertyType.GenericTypeArguments |> Seq.exactlyOne
 
@@ -56,3 +56,15 @@ f.PropertyType.GenericTypeArguments |> Seq.exactlyOne
 //         opt (pfieldTag f>>.ptype (f.PropertyType.GenericTypeArguments |> Seq.exactlyOne))
 //     else 
 //         pfieldTag f>>.ptype f.PropertyType
+
+
+let mutable test : obj = [22]
+
+type Test = 
+  {//Name : string;
+  Age : int32}
+let typ = typeof<Test>
+let vals : obj[] = [|33|]
+
+
+FSharpValue.MakeRecord(typ,  vals)
