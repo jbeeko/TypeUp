@@ -13,7 +13,13 @@ let empty ty =
         |> Seq.exactlyOne
     Reflection.FSharpValue.MakeUnion(uc, [||])
 
-
+let (<!>) (p: Parser<_,_>) label : Parser<_,_> =
+    fun stream ->
+        printfn "%A: Entering %s" stream.Position label
+        let reply = p stream
+        printfn "%A: Leaving %s (%A)" stream.Position label reply.Status
+        reply
+        
 let mayThrow (p : Parser<_,_>) : Parser<_,_> =
     fun stream ->
         let state = stream.State        
@@ -24,7 +30,7 @@ let mayThrow (p : Parser<_,_>) : Parser<_,_> =
             Reply(FatalError, messageError e.Message)
 
 type FSharpType with
-    static member IsOption (t : Type) = t.FullName = "FSharpOption`1"
+    static member IsOption (t : Type) = t.Name = "FSharpOption`1"
 
 type FSharpType with
     static member IsList (t : Type) = t.Name = "FSharpList`1"
@@ -64,12 +70,21 @@ let pprimative t =
 let rec pfieldName (f: Reflection.PropertyInfo) =
     pstring f.Name >>.pchar ':'
 
-and pfield f =
-    pfieldName f>>.
-    ptype f.PropertyType
+and pfield (f: Reflection.PropertyInfo) =
+    printfn "in field %O" f.PropertyType
+    let castToSting (s : obj)  =
+        s :?> String
+
+    if FSharpType.IsOption f.PropertyType then
+        //This is avery limited support for options, only string options are supported. 
+        opt (pfieldName f>>.ptype (f.PropertyType.GenericTypeArguments |> Seq.exactlyOne)|>> castToSting)|>>box
+    else 
+        pfieldName f>>.ptype f.PropertyType
+
 
 and precord t =
     let makeType vals = 
+        printfn "vals are %A" vals
         FSharpValue.MakeRecord(t,  vals)
 
     FSharpType.GetRecordFields (t)

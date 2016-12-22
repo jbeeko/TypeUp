@@ -13,7 +13,7 @@ type Phone =
 
 type Address = {
     Street: String;
-    City: String; Region: String;
+    City: String; Region: String; Postal: String option;
     Country: String;
     }
 
@@ -62,3 +62,4 @@ and Contract = {
     Holder : LegalEntity;
     }
 
+type SimpleRecord = {Name : string option }
