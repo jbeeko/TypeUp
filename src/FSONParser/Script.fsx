@@ -45,3 +45,14 @@ List.append l2 "foo"
 let l : string list = []
 "foo"::l
 List.append l ["foo"]
+
+type Test = {Name : string option}
+let f = (FSharpType.GetRecordFields typeof<Test>).[0]
+f.PropertyType.GenericTypeArguments |> Seq.exactlyOne
+
+
+// and pfield (f: Reflection.PropertyInfo) : Parser<obj,unit> =
+//     if FSharpType.IsOption f.PropertyType then
+//         opt (pfieldTag f>>.ptype (f.PropertyType.GenericTypeArguments |> Seq.exactlyOne))
+//     else 
+//         pfieldTag f>>.ptype f.PropertyType
