@@ -37,26 +37,29 @@ type Uri with
 
 let primFromString (t:  Type) str : obj =
     match t.FullName with
-    |"System.Int16" -> upcast Int16.Parse(str) 
+    |"System.Int16" -> upcast Int16.Parse(str)
     |"System.Int32" -> upcast Int32.Parse(str)
-    |"System.Int64" -> upcast Int64.Parse(str) 
-    |"System.UInt16" -> UInt16.Parse(str) |> box
-    |"System.UInt32" -> UInt32.Parse(str) |> box
-    |"System.UInt64" -> UInt64.Parse(str) |> box
-    |"System.Single" -> Single.Parse(str) |> box
-    |"System.Double" -> Double.Parse(str) |> box
-    |"System.Decimal" -> Decimal.Parse(str) |> box
-    |"System.Boolean" -> Boolean.Parse(str) |> box
-    |"System.Byte" -> Byte.Parse(str) |> box
-    |"System.SByte" -> Byte.Parse(str) |> box
-    |"System.Char" -> Char.Parse(str) |> box
-    |"System.String" -> str |> box
-    |"System.DateTime" -> DateTime.Parse str |> box
-    |"System.Guid" -> Guid.Parse str |> box
-    |"System.Uri" -> Uri.Parse str |> box
-    |"System.Net.IPAddress" -> IPAddress.Parse str |> box
-    |"System.Net.Mail.MailAddress" -> MailAddress.Parse str |> box
+    |"System.Int64" -> upcast Int64.Parse(str)
+    |"System.UInt16" -> upcast UInt16.Parse(str)
+    |"System.UInt32" -> upcast UInt32.Parse(str)
+    |"System.UInt64" -> upcast UInt64.Parse(str)
+    |"System.Single" -> upcast Single.Parse(str)
+    |"System.Double" -> upcast Double.Parse(str)
+    |"System.Decimal" -> upcast Decimal.Parse(str)
+    |"System.Boolean" -> upcast Boolean.Parse(str)
+    |"System.Byte" -> upcast Byte.Parse(str)
+    |"System.SByte" -> upcast Byte.Parse(str)
+    |"System.Char" -> upcast Char.Parse(str)
+    |"System.String" -> upcast str
+    |"System.DateTime" -> upcast DateTime.Parse str
+    |"System.Guid" -> upcast Guid.Parse str
+    |"System.Uri" -> upcast Uri.Parse str
+    |"System.Net.IPAddress" -> upcast IPAddress.Parse str
+    |"System.Net.Mail.MailAddress" -> upcast MailAddress.Parse str
     |_ -> failwith "Unsupported primative type"
+
+let pprimative t =
+    mayThrow(restOfLine false |>> (primFromString t))
 
 let rec pfieldName (f: Reflection.PropertyInfo) =
     pstring f.Name >>.pchar ':'
@@ -114,7 +117,7 @@ and ptype(t : Type)  =
     spaces >>.
     match t with
     | EMail t | GUID t | URL t | IP t
-    | Primative t -> mayThrow(restOfLine false |>> (primFromString t))
+    | Primative t -> pprimative t
     
     | List t -> plist t
     | Record t -> precord t
