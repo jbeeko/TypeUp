@@ -47,6 +47,7 @@
     <None Include="TagParserExample.fsx" />
     <None Include="IndentParserExample.fsx" />
     <None Include="MiscParsers.fsx" />
+    <Compile Include="Testing.fsx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Choose>

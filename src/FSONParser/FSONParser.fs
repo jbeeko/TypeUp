@@ -6,13 +6,13 @@ open FSharp.Reflection
 open System.Net
 open System.Net.Mail
 
-module List =
-    let empty ty = 
-        let uc = 
-            Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
-            |> Seq.filter (fun uc -> uc.Name = "Empty") 
-            |> Seq.exactlyOne
-        Reflection.FSharpValue.MakeUnion(uc, [||])
+let empty ty = 
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Empty") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [||])
+
 
 let mayThrow (p: Parser<'t,'u>) : Parser<'t,'u> =
     fun stream ->
@@ -93,12 +93,14 @@ and punioncase  (c: UnionCaseInfo) : Parser<_,_> =
 and punion (t : Type) : Parser<obj,unit> =
     punioninfo t >>= punioncase 
 
-and plistelement (t : Type) : Parser<obj, unit> =
-    spaces>>.pstring "-">>.ptype t
+and plistelement (t : Type) : Parser<_, _> =
 
+    spaces>>.pstring "-">>.ptype t
+    
 and plist (t : Type) : Parser<obj, unit> =
-    let initial = List.empty t.GenericTypeArguments.[0]
-    preturn (box initial)
+    let elementT  = t.GenericTypeArguments |> Seq.exactlyOne
+    let initial = empty elementT
+    many (plistelement elementT)|>>List.singleton>>%initial|>>box
 
 and ptype(t : Type) : Parser<obj,unit> =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
@@ -120,4 +122,3 @@ and ptype(t : Type) : Parser<obj,unit> =
     | Record t -> precord t
     | Union t -> punion t
     | _ -> fail "Unsupported type"
-    

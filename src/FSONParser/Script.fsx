@@ -6,22 +6,42 @@
 
 open System
 open System.IO
+open System.Reflection
 open FParsec
 open FSONParser
 open Models
+open FSharp.Reflection
+open System.Net
+open System.Net.Mail
 
-let test p str =
-    match run p str with
-    | Success(result, _, _)   -> result
-    | Failure(errorMsg, _, _) -> failwith (sprintf "Failure: %s" errorMsg)
 
-let contractData = File.ReadAllText("./src/FSONParser/SampleData.fson")
 
-let parsed = test (ptype typeof<Contract> |>> (fun anObj -> anObj :?> Contract)) contractData
 
-parsed = SampleModels.constructed
-parsed.Jurisdiction = BC
-match parsed.Holder with
-| Person p -> sprintf "Holder is %s" p.Name
-| Company c -> sprintf "Holder company %s" c.Name
-| Tag t -> sprintf "Holder is tag %s" t
+type ListHelper =
+  static member Empty<'T>() : list<'T> = []
+
+let makeEmpty =
+  let empty = typeof<ListHelper>.GetMethod("Empty")
+  let emptyArr : obj[] = [| |]
+  fun ty -> empty.MakeGenericMethod([| ty |]).Invoke(null, emptyArr)
+
+let l1 = makeEmpty typeof<string>
+"ads"::l1
+List.append l1 ["foo"]
+
+List.append (makeEmpty typeof<string>) ["foo"]
+
+let empty ty = 
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Empty") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [||])
+
+let l2 = empty typeof<string>
+"foo"::l2
+List.append l2 "foo"
+
+let l : string list = []
+"foo"::l
+List.append l ["foo"]
