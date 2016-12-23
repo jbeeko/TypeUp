@@ -75,12 +75,7 @@ The following .Net types are implements as primatives. In each cast the data is 
 
 **Bytes, Chars, Strings and Booleans**, [Boolean](https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx), [Byte](https://msdn.microsoft.com/en-us/library/system.byte(v=vs.110).aspx), [SByte](https://msdn.microsoft.com/en-us/library/system.sbyte(v=vs.110).aspx), [Char](https://msdn.microsoft.com/en-us/library/system.char(v=vs.110).aspx), [String](https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx)
 
-#### Other primatives
-* [DateTime](https://msdn.microsoft.com/en-us/library/system.datetime(v=vs.110).aspx)
-* [Guid](https://msdn.microsoft.com/en-us/library/system.guid(v=vs.110).aspx)
-* [IPAddress](https://msdn.microsoft.com/en-us/library/system.net.ipaddress(v=vs.110).aspx)
-* [Uri](https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx)
-* [MailAddress](https://msdn.microsoft.com/en-us/library/system.net.mailaddress(v=vs.110).aspx)
+**Other primatives:** [DateTime](https://msdn.microsoft.com/en-us/library/system.datetime(v=vs.110).aspx), [Guid](https://msdn.microsoft.com/en-us/library/system.guid(v=vs.110).aspx), [IPAddress](https://msdn.microsoft.com/en-us/library/system.net.ipaddress(v=vs.110).aspx), [Uri](https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx), [MailAddress](https://msdn.microsoft.com/en-us/library/system.net.mail.mailaddress(v=vs.110).aspx)
 
 ## FSON Parser
 
