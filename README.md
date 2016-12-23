@@ -6,9 +6,11 @@ TypeUp is useful where typed data needs to be specified in a text file. For exam
 
 For the FSharp developer TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the JSON structure into the FSharp types. 
 
-Here is an example of defining a type, creating some data and parsing it.
+[Here](../../examples/simple.fsx) is an example of defining a type, creating some data and parsing it.
 
 ```
+#r @"..\build\FSONParser.dll"
+
 open FSONParser
 
 type Jurisdiction = 
@@ -27,9 +29,11 @@ Street: 245 West Howe
 City: Vancouver
 Region: BC
 Country: Canada"
+
+let address = (parseFSON typeof<Address> data) :?> Address
 ```
 
-Sending the above to FSharp Interactive followed by `(parseFSON typeof<Address> data) :?> Address` results in:
+Sending the above to FSharp Interactive results in:
 
 ```
 > (parseFSON typeof<Address> data) :?> Address;;
@@ -127,9 +131,11 @@ Collections are not working. There seem to be two issues:
 
 ## Appendix I Larger Example
 
-[Here](../../examples/ComplexExample.fsx) is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
+[Here](../../examples/complex.fsx) is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
 
 ```
+#r @"..\build\FSONParser.dll"
+
 open System
 open System.Net
 open System.Net.Mail
@@ -184,7 +190,6 @@ and Contract = {
     Jurisdiction : Jurisdiction;
     Provider : LegalEntity;
     Holder : LegalEntity}
-
 let data = "
 Number: 34343
 ID:  872ccb13-2e12-4eec-a2f5-ab64b3652b1c
@@ -222,10 +227,11 @@ Holder:
         Region: BC
         Country: Canada"
 
-(parseFSON typeof<Contract> data) :?> Contract
+let contract = (parseFSON typeof<Contract> data) :?> Contract
+
 ```
 
-This will result in a Contract equal to the following: 
+This will result in the following FSI output 
 
 ``` 
 val it : Models.Contract =
