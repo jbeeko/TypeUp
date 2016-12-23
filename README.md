@@ -55,7 +55,8 @@ Cityxx: Vancouver
 
 and an out of range value results in:
 ```
-Number: 36705555555555555
+Failure: Error in Ln: 3 Col: 9
+Number: 3670555555555555555555555
         ^
 Value was either too large or too small for an Int16.
 ```
