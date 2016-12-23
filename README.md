@@ -1,6 +1,6 @@
 # TypeUp
 
-TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. FSON files are useful where strickly typed data needs to be specified. For example configuration files or structured documents such as contracts or service definition documents. 
+TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. TypeUp is useful where strickly typed data needs to be specified in a text file. For example configuration files or structured documents such as contracts or service definition documents. 
 
 Here is an example of defining a type, creating some data and parsing it.
 
@@ -25,7 +25,7 @@ Region: BC
 Country: Canada"
 ```
 
-Then sending `(parseFSON typeof<Address> data) :?> Address` to FSharp Interactive results in:
+Sending the above to FSharp Interactive followed by `(parseFSON typeof<Address> data) :?> Address` results in:
 
 ```
 > (parseFSON typeof<Address> data) :?> Address;;
@@ -79,27 +79,47 @@ The following .Net types are implements as primatives. In each case a string rep
 
 ### Limitations
 
+#### Multi field Union types
+Union types with multiple fields are not supported. In principle it shoud be possible to support multiple fields. Those with labels would be supported like in the case of records. Unlabled fields would need to be designated using say a '-'.
+
+
 ## FSON Parser
 
 ### Validation Approach
 
 ### Adding Primatives
 
-## Tooling Support
-
-## Outstanding Issues
-
-
-
 ## Roadmap
 
-## A Larger Example
+### Outstanding Issues
 
-Here is a larger example demonstrating:
-* A wider range of primative values
-* Nested records
-* Union types
-* Lists
+#### Indent Based Parsing
+The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. 
+
+#### Options
+The parser currently only works for `string option`. This is due an issue constructing the correct type to pass to `FSharpValue.MakeRecord`. 
+
+#### Collections
+
+Collections are not working. There seem to be two issues:
+1) knowing when to stop applying the parser parsing list elements `many` from `FParsec`. 
+2) like in the case of options knowing how to return a correclty typed list to `FSharpValue.MakeRecord`. 
+
+
+### Tooling Support
+
+### FSON Language Extensions
+
+#### "let" Bindings
+
+#### Validation Approach
+
+#### Support for Constained Strings and Types
+
+## Appendix I Larger Example
+
+Here is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
+
 
 ```
 open System
