@@ -13,6 +13,12 @@ let empty ty =
         |> Seq.exactlyOne
     Reflection.FSharpValue.MakeUnion(uc, [||])
 
+let castToSting (s : obj)  =
+    // used for hacks where reflection is not understood
+    s :?> String
+
+
+
 let (<!>) (p: Parser<_,_>) label : Parser<_,_> =
     fun stream ->
         printfn "%A: Entering %s" stream.Position label
@@ -71,10 +77,6 @@ let rec pfieldName (f: Reflection.PropertyInfo) =
     pstring f.Name >>.pchar ':'
 
 and pfield (f: Reflection.PropertyInfo) =
-    printfn "in field %O" f.PropertyType
-    let castToSting (s : obj)  =
-        s :?> String
-
     if FSharpType.IsOption f.PropertyType then
         //This is avery limited support for options, only string options are supported. 
         opt (pfieldName f>>.ptype (f.PropertyType.GenericTypeArguments |> Seq.exactlyOne)|>> castToSting)|>>box
@@ -84,7 +86,6 @@ and pfield (f: Reflection.PropertyInfo) =
 
 and precord t =
     let makeType vals = 
-        printfn "vals are %A" vals
         FSharpValue.MakeRecord(t,  vals)
 
     FSharpType.GetRecordFields (t)
