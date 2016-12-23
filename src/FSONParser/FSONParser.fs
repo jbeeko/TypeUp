@@ -60,7 +60,7 @@ let primFromString (t:  Type) str : obj =
     |"System.Decimal" -> upcast Decimal.Parse(str)
     |"System.Boolean" -> upcast Boolean.Parse(str)
     |"System.Byte" -> upcast Byte.Parse(str)
-    |"System.SByte" -> upcast Byte.Parse(str)
+    |"System.SByte" -> upcast SByte.Parse(str)
     |"System.Char" -> upcast Char.Parse(str)
     |"System.String" -> upcast str
     |"System.DateTime" -> upcast DateTime.Parse str

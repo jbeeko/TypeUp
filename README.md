@@ -69,25 +69,11 @@ Even better messages with better tooling support such as intellisense and sugges
 
 The following .Net types are implements as primatives. In each cast the data is passed to the native .Net parse method or constructor and either the value is created or the error message is show.
 
-####Signed and Unsigned Integers
-* [Int16](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [Int32](https://msdn.microsoft.com/en-us/library/system.int32(v=vs.110).aspx)
-* [Int64](https://msdn.microsoft.com/en-us/library/system.int64(v=vs.110).aspx)
-* [UInt16](https://msdn.microsoft.com/en-us/library/system.uint16(v=vs.110).aspx)
-* [UInt32](https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx)
-* [UInt64](https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx)
+**Signed and Unsigned Integers:** [Int16](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx), [Int32](https://msdn.microsoft.com/en-us/library/system.int32(v=vs.110).aspx), [Int64](https://msdn.microsoft.com/en-us/library/system.int64(v=vs.110).aspx), [UInt16](https://msdn.microsoft.com/en-us/library/system.uint16(v=vs.110).aspx), [UInt32](https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx), [UInt64](https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx)
 
-#### Floats and Decimals
-* [Single](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [Double](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [Decimal](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+**Floats and Decimals:** [Single](https://msdn.microsoft.com/en-us/library/system.single(v=vs.110).aspx), [Double](https://msdn.microsoft.com/en-us/library/system.double(v=vs.110).aspx), [Decimal](https://msdn.microsoft.com/en-us/library/system.decimal(v=vs.110).aspx)
 
-#### Bytes, Chars, Strings and Booleans
-* [Boolean](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [Byte](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [SByte](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [Char](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* [String](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+**Bytes, Chars, Strings and Booleans**, [Boolean](https://msdn.microsoft.com/en-us/library/system.byte(v=vs.110).aspx), [Byte](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx), [SByte](https://msdn.microsoft.com/en-us/library/system.sbyte(v=vs.110).aspx), [Char](https://msdn.microsoft.com/en-us/library/system.char(v=vs.110).aspx), [String](https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx
 
 #### Other primatives
 * [DateTime](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
