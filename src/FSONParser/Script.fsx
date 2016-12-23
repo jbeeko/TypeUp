@@ -1,6 +1,6 @@
-#r @"..\..\packages\FParsec\lib\net40-client\FParsecCS.dll"
-#r @"..\..\packages\FParsec\lib\net40-client\FParsec.dll"
-#load "FSONParser.fs"
+#r @"..\..\build\FParsecCS.dll"
+#r @"..\..\build\FParsec.dll"
+#r @"..\..\build\FSONParser.dll"
 open FSONParser
 
 type Jurisdiction = 
@@ -10,8 +10,7 @@ type Address =
     {Street: string;
     City: string; Region: Jurisdiction; 
     Postal: string option;
-    Country: string;
-    Northing: int16}
+    Country: string}
 
 let data = "
 Street: 245 West Howe

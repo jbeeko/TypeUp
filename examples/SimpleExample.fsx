@@ -1,6 +1,5 @@
-#r @"..\..\packages\FParsec\lib\net40-client\FParsecCS.dll"
-#r @"..\..\packages\FParsec\lib\net40-client\FParsec.dll"
-#load "FSONParser.fs"
+#r @"..\build\FSONParser.dll"
+
 open FSONParser
 
 type Jurisdiction = 
@@ -20,4 +19,4 @@ City: Vancouver
 Region: BC
 Country: Canada"
 
-(parseFSON typeof<Address> data) :?> Address
+let address = (parseFSON typeof<Address> data) :?> Address

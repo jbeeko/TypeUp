@@ -41,14 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FSONParser.fs" />
-    <Compile Include="Models.fs" />
-    <Compile Include="SampleModels.fs" />
     <None Include="Script.fsx" />
-    <None Include="TagParserExample.fsx" />
-    <None Include="IndentParserExample.fsx" />
-    <None Include="MiscParsers.fsx" />
-    <Compile Include="Testing.fsx" />
-    <Compile Include="SimpleExample.fsx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Choose>
