@@ -1,6 +1,40 @@
 # TypeUp
 
-TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. Given a FSharp type such as
+TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. FSON files can be used as typed configuration files or to maintain an archive of structured documents. 
+
+A sample use is the following. A more complex exmaple is provided later.
+
+```
+open FSONParser
+
+type Address = 
+    {Street: String;
+    City: String; Region: String; 
+    Postal: String option;
+    Country: String}
+
+let data = "
+Street: 245 West Howe
+City: Vancouver
+Region: BC
+Postal: V6R-3L6
+Country: Canada"
+
+(parseFSON typeof<Contract> data) :?> Address
+```
+
+The value of `parseFSON` will be identical to result of executing:
+
+```
+{Street = "245 West Howe";
+City = "Vancouver";
+Region = "BC";
+Postal = Some("12345");
+Country = "Canada" }
+```
+
+
+## A Larger Example
 
 ```
 type Address = {
@@ -32,8 +66,6 @@ type Person = {
 
 and Company = {
         Name: String;
-        //Phones: Phone list;
-        WebSite: Uri;
         IncorporationLoc: Jurisdiction;
         BeneficialOwner: LegalEntity}
 
@@ -50,11 +82,6 @@ and Contract = {
     Provider : LegalEntity;
     Holder : LegalEntity}
 
-```
-
-and FSON input like the following: 
-
-```
 let data = "
 Number: 34343
 ID:  872ccb13-2e12-4eec-a2f5-ab64b3652b1c
@@ -91,12 +118,8 @@ Holder:
         City: Vancouver
         Region: BC
         Country: Canada"
-```
 
-Then...
-
-```
-(parseFSON typeof<Contract> contractData) :?> Contract
+(parseFSON typeof<Contract> data) :?> Contract
 ```
 
 Will result in a Contract identical to the following: 
