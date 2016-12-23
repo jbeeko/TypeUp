@@ -2,7 +2,7 @@
 
 TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. FSON files can be used as typed configuration files or to maintain an archive of structured documents. 
 
-A sample use is the following. A more complex exmaple is provided later.
+A sample use is the following. A more complex example is provided later.
 
 ```
 open FSONParser
@@ -17,20 +17,19 @@ let data = "
 Street: 245 West Howe
 City: Vancouver
 Region: BC
-Postal: V6R-3L6
 Country: Canada"
-
-(parseFSON typeof<Contract> data) :?> Address
 ```
 
-The value of `parseFSON` will be identical to result of executing:
+Then sending `(parseFSON typeof<Address> data) :?> Address` to FSharp Interactive results in:
 
 ```
-{Street = "245 West Howe";
-City = "Vancouver";
-Region = "BC";
-Postal = Some("12345");
-Country = "Canada" }
+> (parseFSON typeof<Address> data) :?> Address;;
+val it : Address = {Street = "245 West Howe";
+                    City = "Vancouver";
+                    Region = "BC";
+                    Postal = null;
+                    Country = "Canada";}
+>
 ```
 
 
