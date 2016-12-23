@@ -73,7 +73,7 @@ The following .Net types are implements as primatives. In each cast the data is 
 
 **Floats and Decimals:** [Single](https://msdn.microsoft.com/en-us/library/system.single(v=vs.110).aspx), [Double](https://msdn.microsoft.com/en-us/library/system.double(v=vs.110).aspx), [Decimal](https://msdn.microsoft.com/en-us/library/system.decimal(v=vs.110).aspx)
 
-**Bytes, Chars, Strings and Booleans**, [Boolean](https://msdn.microsoft.com/en-us/library/system.byte(v=vs.110).aspx), [Byte](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx), [SByte](https://msdn.microsoft.com/en-us/library/system.sbyte(v=vs.110).aspx), [Char](https://msdn.microsoft.com/en-us/library/system.char(v=vs.110).aspx), [String](https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx
+**Bytes, Chars, Strings and Booleans**, [Boolean](https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx), [Byte](https://msdn.microsoft.com/en-us/library/system.byte(v=vs.110).aspx), [SByte](https://msdn.microsoft.com/en-us/library/system.sbyte(v=vs.110).aspx), [Char](https://msdn.microsoft.com/en-us/library/system.char(v=vs.110).aspx), [String](https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx
 
 #### Other primatives
 * [DateTime](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
