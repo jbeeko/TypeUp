@@ -1,6 +1,6 @@
 # TypeUp
 
-TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. FSON files where strickly typed data needs to be specified. For example configuration files or structured documents such are contracts or service definition documents. 
+TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. FSON files are useful where strickly typed data needs to be specified. For example configuration files or structured documents such as contracts or service definition documents. 
 
 Here is an example of defining a type, creating some data and parsing it.
 
@@ -38,7 +38,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very simple example (a larger example is [here](#a-larger-example)), and tooling support is still rudimentatary but already the advantage to letting the FSharp type provide a data definition language can be seen. For example a misnamed field results in
+This is a very simple example (a larger example is [here](#a-larger-example)), and tooling support is still rudimentatary but already the advantage using FSharp as a data definition language can be seen. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 5
 Citys: Vancouver
@@ -67,7 +67,7 @@ Even better messages with better tooling support such as intellisense and sugges
 
 ### Primative Values
 
-The following .Net types are implements as primatives. In each cast the data is passed to the native .Net parse method or constructor and either the value is created or the error message is show.
+The following .Net types are implements as primatives. In each case a string represening all of the data in the field is passed to the native .Net parse method or constructor as is and either a value is created or the parser fails with the .Net error message.
 
 **Signed and Unsigned Integers:** [Int16](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx), [Int32](https://msdn.microsoft.com/en-us/library/system.int32(v=vs.110).aspx), [Int64](https://msdn.microsoft.com/en-us/library/system.int64(v=vs.110).aspx), [UInt16](https://msdn.microsoft.com/en-us/library/system.uint16(v=vs.110).aspx), [UInt32](https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx), [UInt64](https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx)
 
@@ -77,7 +77,13 @@ The following .Net types are implements as primatives. In each cast the data is 
 
 **Other primatives:** [DateTime](https://msdn.microsoft.com/en-us/library/system.datetime(v=vs.110).aspx), [Guid](https://msdn.microsoft.com/en-us/library/system.guid(v=vs.110).aspx), [IPAddress](https://msdn.microsoft.com/en-us/library/system.net.ipaddress(v=vs.110).aspx), [Uri](https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx), [MailAddress](https://msdn.microsoft.com/en-us/library/system.net.mail.mailaddress(v=vs.110).aspx)
 
+### Limitations
+
 ## FSON Parser
+
+### Validation Approach
+
+### Adding Primatives
 
 ## Tooling Support
 

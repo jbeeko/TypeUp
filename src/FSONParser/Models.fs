@@ -40,7 +40,6 @@ type Person = {
 
 and Company = {
         Name: String;
-        //Phones: Phone list;
         WebSite: Uri;
         IncorporationLoc: Jurisdiction;
         BeneficialOwner: LegalEntity}
@@ -57,5 +56,3 @@ and Contract = {
     Jurisdiction : Jurisdiction;
     Provider : LegalEntity;
     Holder : LegalEntity}
-
-type SimpleRecord = {Name : string option }

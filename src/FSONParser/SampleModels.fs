@@ -1,8 +1,8 @@
 module SampleModels
+
 open System
 open System.Net
 open System.Net.Mail
-open FSONParser
 open Models
 
 let constructed : Contract = 
@@ -12,14 +12,14 @@ let constructed : Contract =
     Jurisdiction = BC;
     Provider = 
         Company {Name = "Acme Widgets";
-            WebSite = Uri.Parse "http://www.acme.com";
+            WebSite = Uri("http://www.acme.com");
             IncorporationLoc = BC;
             BeneficialOwner =
                 Person {Name = "Bill Smith";
                 DOB = DateTime.Parse "1988-01-20";
-                eMail = MailAddress.Parse "bill@co.com";
+                eMail = MailAddress("bill@co.com");
                 Phone = Mobile "604 666 7777";
-                WebSite = Uri.Parse "http://www.bill.com";
+                WebSite = Uri("http://www.bill.com");
                 IP = IPAddress.Parse "127.0.0.1";
                 Occupations = [];
                 Address =
@@ -31,9 +31,9 @@ let constructed : Contract =
     Holder =
         Person {Name = "Anne Brown";
         DOB = DateTime.Parse "1998-10-25";
-        eMail = MailAddress.Parse "anne@co.com";
+        eMail = MailAddress("anne@co.com");
         Phone = Office "604 666 8888";
-        WebSite = Uri.Parse "http://www.anne.com";
+        WebSite = Uri("http://www.anne.com");
         IP = IPAddress.Parse "2001:0:9d38:6abd:2c48:1e19:53ef:ee7e";
         Occupations = [];
         Address =
