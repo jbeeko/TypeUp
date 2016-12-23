@@ -51,7 +51,7 @@ Number: 36705555555555555
 Value was either too large or too small for an Int16.
 ```
 
-Other error condictions provide similar nice errors.
+Other error condictions provide similar "compiler" errors.
 
 
 ## A Larger Example
