@@ -1,6 +1,6 @@
 # TypeUp
 
-TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. FSON files can be used as typed configuration files or to maintain an archive of structured documents. 
+TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. FSON files where strickly typed data needs to be specified. For example configuration files or structured documents such are contracts or service definition documents. 
 
 Here is an example of defining a type, creating some data and parsing it.
 
@@ -38,7 +38,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very simple example but already the advantage to letting the FSharp type provide a data definition language can be seen. For example a misnamed field results in
+This is a very simple example (A larger example is [here](#a-larger-example)), and tooling support is still rudimentatary but already the advantage to letting the FSharp type provide a data definition language can be seen. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 5
 Citys: Vancouver
@@ -53,7 +53,9 @@ Value was either too large or too small for an Int16.
 
 Other error conditions provide similar "compiler" errors. 
 
-A larger example is [here](#a-larger-example).
+Even better messages with better tooling support such as intellisense and suggestions would allow expert domain users to enter structured data without the need for domain specific UIs. 
+
+## Tooling Support
 
 ## FSON Language
 
