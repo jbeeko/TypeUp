@@ -38,7 +38,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very simple example (A larger example is [here](#a-larger-example)), and tooling support is still rudimentatary but already the advantage to letting the FSharp type provide a data definition language can be seen. For example a misnamed field results in
+This is a very simple example (a larger example is [here](#a-larger-example)), and tooling support is still rudimentatary but already the advantage to letting the FSharp type provide a data definition language can be seen. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 5
 Citys: Vancouver
@@ -50,8 +50,6 @@ Number: 36705555555555555
         ^
 Value was either too large or too small for an Int16.
 ```
-
-Other error conditions provide similar "compiler" errors. 
 
 Even better messages with better tooling support such as intellisense and suggestions would allow expert domain users to enter structured data without the need for domain specific UIs. 
 
