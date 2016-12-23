@@ -14,8 +14,7 @@ type Phone =
 type Address = {
     Street: String;
     City: String; Region: String; Postal: String option;
-    Country: String;
-    }
+    Country: String}
 
 type Jurisdiction = 
     | BC
@@ -37,16 +36,14 @@ type Person = {
     WebSite : Uri;
     IP : IPAddress;
     Occupations : Occupation list;
-    Address : Address;
-    }
+    Address : Address}
 
 and Company = {
         Name: String;
         //Phones: Phone list;
         WebSite: Uri;
         IncorporationLoc: Jurisdiction;
-        BeneficialOwner: LegalEntity;
-    }
+        BeneficialOwner: LegalEntity}
 
 and LegalEntity = 
     | Person of Person
@@ -59,7 +56,6 @@ and Contract = {
     Start : DateTime;
     Jurisdiction : Jurisdiction;
     Provider : LegalEntity;
-    Holder : LegalEntity;
-    }
+    Holder : LegalEntity}
 
 type SimpleRecord = {Name : string option }

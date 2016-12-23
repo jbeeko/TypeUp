@@ -41,7 +41,7 @@ address.Postal
 
 let contractData = File.ReadAllText("./src/FSONParser/SampleData.fson")
 
-let parsed = test (ptype typeof<Contract> |>> (fun anObj -> anObj :?> Contract)) contractData
+let parsed = (parseFSON typeof<Contract> contractData) :?> Contract
 
 parsed = SampleModels.constructed
 parsed.Jurisdiction = BC

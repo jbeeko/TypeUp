@@ -139,3 +139,8 @@ and ptype(t : Type)  =
     | Record t -> precord t
     | Union t -> punion t
     | _ -> fail "Unsupported type"
+
+let parseFSON t fson = 
+    match run (ptype t) fson with
+    | Success(result, _, _)   -> result
+    | Failure(errorMsg, _, _) -> failwith (sprintf "Failure: %s" errorMsg)
