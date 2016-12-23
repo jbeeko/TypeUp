@@ -68,26 +68,33 @@ Even better messages with better tooling support such as intellisense and sugges
 ### Primative Values
 
 The following .Net types are implements as primatives. In each cast the data is passed to the native .Net parse method or constructor and either the value is created or the error message is show.
+
+####Signed and Unsigned Integers
 * [Int16](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
-* Int32
+* [Int32](https://msdn.microsoft.com/en-us/library/system.int32(v=vs.110).aspx)
+* [Int64](https://msdn.microsoft.com/en-us/library/system.int64(v=vs.110).aspx)
+* [UInt16](https://msdn.microsoft.com/en-us/library/system.uint16(v=vs.110).aspx)
+* [UInt32](https://msdn.microsoft.com/en-us/library/system.uint32(v=vs.110).aspx)
+* [UInt64](https://msdn.microsoft.com/en-us/library/system.uint64(v=vs.110).aspx)
 
-    |"System.Int16" -> upcast Int16.Parse(str)
-    |"System.Int32" -> upcast Int32.Parse(str)
-    |"System.Int64" -> upcast Int64.Parse(str)
-    |"System.UInt16" -> upcast UInt16.Parse(str)
-    |"System.UInt32" -> upcast UInt32.Parse(str)
-    |"System.UInt64" -> upcast UInt64.Parse(str)
-    |"System.Single" -> upcast Single.Parse(str)
-    |"System.Double" -> upcast Double.Parse(str)
-    |"System.Decimal" -> upcast Decimal.Parse(str)
-    |"System.Boolean" -> upcast Boolean.Parse(str)
-    |"System.Byte" -> upcast Byte.Parse(str)
-    |"System.SByte" -> upcast Byte.Parse(str)
-    |"System.Char" -> upcast Char.Parse(str)
-    |"System.String" -> upcast str
-    |"System.DateTime" -> upcast DateTime.Parse str
-    |"System.Guid" -> upcast Guid.Parse str
+#### Floats and Decimals
+* [Single](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [Double](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [Decimal](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
 
+#### Bytes, Chars, Strings and Booleans
+* [Boolean](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [Byte](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [SByte](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [Char](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [String](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+
+#### Other primatives
+* [DateTime](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [Guid](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [IPAddress](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [Uri](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* [MailAddress](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
 
 ## FSON Parser
 
