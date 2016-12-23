@@ -51,7 +51,7 @@ Number: 36705555555555555
 Value was either too large or too small for an Int16.
 ```
 
-Other error condictions provide similar "compiler" errors.
+Other error condictions provide similar "compiler" errors. A larger example is [here](#a-larger-example).
 
 
 ## A Larger Example
@@ -194,102 +194,3 @@ Contract =
                 Postal = None;
                 Country = "Canada" }}}
 ```
-
-
-
-
-![Sample output](docs/sample-output-2.png)
-
-  * [expecto](#expecto)
-    * [Installing](#installing)
-    * [Testing "Hello world"](#testing-hello-world)
-    * [Running tests](#running-tests)
-      * [runTests](#runtests)
-      * [runTestsInAssembly](#runtestsinassembly)
-      * [testList for grouping](#testlist-for-grouping)
-      * [Filtering with filter](#filtering-with-filter)
-      * [Focusing tests](#focusing-tests)
-      * [Pending tests](#pending-tests)
-    * [Expectations](#expectations)
-      * [Expect module](#expect-module)
-    * [main argv – how to run console apps](#main-argv--how-to-run-console-apps)
-      * [The config](#the-config)
-    * [FsCheck usage](#fscheck-usage)
-    * [BenchmarkDotNet usage](#benchmarkdotnet-usage)
-    * [You're not alone\!](#youre-not-alone)
-    * [Sending e\-mail on failure – custom printers](#sending-e-mail-on-failure--custom-printers)
-    * [About test parallelism](#about-test-parallelism)
-    * [About upgrading from Fuchu](#about-upgrading-from-fuchu)
-
-## Installing
-
-In your paket.dependencies:
-
-```
-nuget Expecto
-nuget Expecto.PerfUtil
-nuget Expecto.FsCheck
-```
-
-Tests should be first-class values so that you can move them around and execute
-them in any context that you want.
-
-Let's have look at what an extensive unit test suite looks like when running
-with Expecto:
-
-![Sample output from Logary](docs/sample-output-logary.png)
-
-## Testing "Hello world"
-
-The test runner is the test assembly itself. It's recommended to compile your
-test assembly as a console application. You can run a test directly like this:
-
-```fsharp
-open Expecto
-
-[<Tests>]
-let tests =
-  testCase "yes" <| fun () ->
-    let subject = "Hello world"
-    Expect.equal subject "Hello World"
-                 "The strings should equal"
-
-[<EntryPoint>]
-let main args =
-  runTestsInAssembly defaultConfig args
-```
-
-The base class is called `Expect`, containing functions you can use to assert
-with. A testing library without a good assertion library is like love without
-kisses.
-
-Now compile and run! `xbuild Sample.fsproj && mono --debug bin/Debug/Sample.exe`
-
-
-## Running tests
-
-Here's the simplest test possible:
-
-```fsharp
-open Expecto
-
-let simpleTest =
-  testCase "A simple test" <| fun _ ->
-    let expected = 4
-    Expect.equal expected (2+2) "2+2 = 4"
-```
-
-Then run it like this, e.g. in the interactive or through a console app.
-
-```fsharp
-runTests defaultConfig simpleTest
-```
-
-which returns 1 if any tests failed, otherwise 0. Useful for returning to the
-operating system as error code.
-
-### `runTests`
-
-Signature `ExpectoConfig -> Test -> int`. Runs the passed tests with the passed
-configuration record.
-
