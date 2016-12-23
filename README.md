@@ -2,18 +2,23 @@
 
 TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. FSON files can be used as typed configuration files or to maintain an archive of structured documents. 
 
-A sample use is the following. A more complex example is provided later.
+Here is a simple example of defining a type, creating some data and parsing it. A more complex example is provided later.
 
 ```
 open FSONParser
 
+type Jurisdiction = 
+    | BC | Alberta | Canada
+
 type Address = 
-    {Street: String;
-    City: String; Region: String; 
-    Postal: String option;
-    Country: String}
+    {Number: int16;
+    Street: string;
+    City: string; Region: Jurisdiction; 
+    Postal: string option;
+    Country: string;}
 
 let data = "
+Number: 3670
 Street: 245 West Howe
 City: Vancouver
 Region: BC
@@ -24,18 +29,39 @@ Then sending `(parseFSON typeof<Address> data) :?> Address` to FSharp Interactiv
 
 ```
 > (parseFSON typeof<Address> data) :?> Address;;
-val it : Address = {Street = "245 West Howe";
+val it : Address = {Number = 3670s;
+                    Street = "245 West Howe";
                     City = "Vancouver";
-                    Region = "BC";
+                    Region = BC;
                     Postal = null;
                     Country = "Canada";}
 >
 ```
 
+This is a very simple example but by making some errors we can already see the advantage to letting the FSharp type provide a data definition language. For example a misnamed field results in
+```
+System.Exception: Failure: Error in Ln: 7 Col: 5
+Citys: Vancouver
+```
+
+
+
+
+Here is a larger example demonstrating:
+* A wider range of primative values
+* Nested records
+* Union types
+* Lists
+
 
 ## A Larger Example
 
 ```
+open System
+open System.Net
+open System.Net.Mail
+open FSONParser
+
 type Address = {
     Street: String;
     City: String; Region: String; Postal: String option;
@@ -121,7 +147,7 @@ Holder:
 (parseFSON typeof<Contract> data) :?> Contract
 ```
 
-Will result in a Contract identical to the following: 
+This will result in a Contract equal to the following: 
 
 ``` 
 Contract = 

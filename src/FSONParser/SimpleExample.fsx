@@ -7,15 +7,16 @@ type Jurisdiction =
     | BC | Alberta | Canada
 
 type Address = 
-    {Street: string;
+    {Number: int16;
+    Street: string;
     City: string; Region: Jurisdiction; 
     Postal: string option;
-    Country: string;
-    Northing: int16}
+    Country: string;}
 
 let data = "
+Number: 3670
 Street: 245 West Howe
-City: Vancouver
+Citys: Vancouver
 Region: BC
 Country: Canada"
 
