@@ -17,8 +17,6 @@ let castToSting (s : obj)  =
     // used for hacks where reflection is not understood
     s :?> String
 
-
-
 let (<!>) (p: Parser<_,_>) label : Parser<_,_> =
     fun stream ->
         printfn "%A: Entering %s" stream.Position label
@@ -82,7 +80,6 @@ and pfield (f: Reflection.PropertyInfo) =
         opt (pfieldName f>>.ptype (f.PropertyType.GenericTypeArguments |> Seq.exactlyOne)|>> castToSting)|>>box
     else 
         pfieldName f>>.ptype f.PropertyType
-
 
 and precord t =
     let makeType vals = 

@@ -1,6 +1,10 @@
 # TypeUp
 
-TypeUp consists of a FSharp Object Notation (FSON) language and a matching  FSONParser. TypeUp lets you represent a wide rage of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. TypeUp is useful where strickly typed data needs to be specified in a text file. For example configuration files or structured documents such as contracts or service definition documents. 
+TypeUp consists of a FSharp Object Notation (FSON) language and a matching FSONParser. TypeUp lets you represent a wide range of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. 
+
+TypeUp is useful where typed data needs to be specified in a text file. For example configuration files or structured documents such as contracts or service definition documents. 
+
+For the FSharp developer TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the JSON structure into the FSharp types. 
 
 Here is an example of defining a type, creating some data and parsing it.
 
@@ -91,7 +95,7 @@ Union types with multiple fields are not supported. In principle it shoud be pos
 
 ## Roadmap
 
-### Outstanding Issues
+### Fix Outstanding Issues
 
 #### Indent Based Parsing
 The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. 
@@ -102,11 +106,16 @@ The parser currently only works for `string option`. This is due an issue constr
 #### Collections
 
 Collections are not working. There seem to be two issues:
+
 1) knowing when to stop applying the parser parsing list elements `many` from `FParsec`. 
 2) like in the case of options knowing how to return a correclty typed list to `FSharpValue.MakeRecord`. 
 
 
 ### Tooling Support
+
+#### Language Engine for VSCode
+
+#### Better Error Messages
 
 ### FSON Language Extensions
 
