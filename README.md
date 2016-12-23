@@ -53,8 +53,6 @@ Value was either too large or too small for an Int16.
 
 Even better messages with better tooling support such as intellisense and suggestions would allow expert domain users to enter structured data without the need for domain specific UIs. 
 
-## Tooling Support
-
 ## FSON Language
 
 ### Block Structure
@@ -69,9 +67,35 @@ Even better messages with better tooling support such as intellisense and sugges
 
 ### Primative Values
 
+The following .Net types are implements as primatives. In each cast the data is passed to the native .Net parse method or constructor and either the value is created or the error message is show.
+* [Int16](https://msdn.microsoft.com/en-us/library/system.int16(v=vs.110).aspx)
+* Int32
+
+    |"System.Int16" -> upcast Int16.Parse(str)
+    |"System.Int32" -> upcast Int32.Parse(str)
+    |"System.Int64" -> upcast Int64.Parse(str)
+    |"System.UInt16" -> upcast UInt16.Parse(str)
+    |"System.UInt32" -> upcast UInt32.Parse(str)
+    |"System.UInt64" -> upcast UInt64.Parse(str)
+    |"System.Single" -> upcast Single.Parse(str)
+    |"System.Double" -> upcast Double.Parse(str)
+    |"System.Decimal" -> upcast Decimal.Parse(str)
+    |"System.Boolean" -> upcast Boolean.Parse(str)
+    |"System.Byte" -> upcast Byte.Parse(str)
+    |"System.SByte" -> upcast Byte.Parse(str)
+    |"System.Char" -> upcast Char.Parse(str)
+    |"System.String" -> upcast str
+    |"System.DateTime" -> upcast DateTime.Parse str
+    |"System.Guid" -> upcast Guid.Parse str
+
+
 ## FSON Parser
 
+## Tooling Support
+
 ## Outstanding Issues
+
+
 
 ## Roadmap
 
