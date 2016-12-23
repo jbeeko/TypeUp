@@ -13,20 +13,17 @@ type Phone =
 
 type Address = {
     Street: String;
-    City: String; Region: String; Postal: String option;
+    City: String; Region: String; 
+    Postal: String option;
     Country: String}
 
 type Jurisdiction = 
-    | BC
-    | Alberta
-    | Canada
+    | BC | Alberta | Saskatuwan | Manitoba | Ontario | Quebec 
+    | NewBrunswick | NewFoundland | PIE  | Yukon | Canada
 
 type Occupation = 
-    | Programmer
-    | Doctor
-    | Pilot
-    | Cook
-    | Painter
+    | Programmer | Doctor | Pilot
+    | Cook | Painter
 
 type Person = {
     Name : string;
