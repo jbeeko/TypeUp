@@ -31,7 +31,7 @@ let mayThrow (p : Parser<_,_>) : Parser<_,_> =
         let state = stream.State        
         try 
             p stream
-        with :? FormatException as e-> 
+        with e-> 
             stream.BacktrackTo(state)
             Reply(FatalError, messageError e.Message)
 

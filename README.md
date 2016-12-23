@@ -44,17 +44,23 @@ System.Exception: Failure: Error in Ln: 7 Col: 5
 Citys: Vancouver
 ```
 
+and an out of range value results in:
+```
+Number: 36705555555555555
+        ^
+Value was either too large or too small for an Int16.
+```
+
+Other error condictions provide similar nice errors.
 
 
+## A Larger Example
 
 Here is a larger example demonstrating:
 * A wider range of primative values
 * Nested records
 * Union types
 * Lists
-
-
-## A Larger Example
 
 ```
 open System

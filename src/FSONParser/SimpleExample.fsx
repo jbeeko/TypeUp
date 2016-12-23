@@ -16,7 +16,7 @@ type Address =
 let data = "
 Number: 3670
 Street: 245 West Howe
-Citys: Vancouver
+City: Vancouver
 Region: BC
 Country: Canada"
 
