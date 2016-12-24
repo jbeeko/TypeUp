@@ -66,6 +66,8 @@ Missing fields, extra fields, wrong types etc result in similar errors.
 
 ## FSON Language
 
+### Comparison to YAML
+
 ### Block Structure
 
 ### Records
@@ -109,8 +111,8 @@ Occupations: Cook Painter
 ```
 It may be worth allowing this where possible, for example Union Types without data.  
 
-### No *Environment* to Support "let" Bindings
-Currenlty the FSONParser parses a single type passed to the parseFSON function. An extension would be to parse a environment of typed binding of the form `<identifier>:<type><data>`. A special binding called `root` is the one to be returned. For example:
+### No Environment to Support "let" Bindings
+Currenlty the FSONParser parses a single type passed to the parseFSON function and returns the matching instance. YAML contains the notion of references to avoid duplication when editing. A similar extension would be to parse a environment of typed binding of the form `<identifier>:<type><data>`. A special binding called `root` is the one to be returned. For example:
 ```
 home: Address 
     Number: 3670
@@ -132,6 +134,10 @@ root: Person
     Address: <home>
 ```
 The benefit of this complication is that it allows the reuse of specific values. The tricky bit is how to integrate this into round tripping i.e. how to go from `text -> type -> text2` and have `text = text2`?
+
+One approach might to be have a way to denote a type as a *reference* type and by convention define those in the environment? 
+
+This change will add a lot of complexity that may not be worth while. The more advanced YAML feature do not seem to get used much, possibly due to the complexity. But it could be that the better tooling support possible due to typing may make it simpler to use.
 
 ### No Support for Validation
 By convention, the parser could invoke a standard `validate` function with the type constructed.
