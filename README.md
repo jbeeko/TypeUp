@@ -93,10 +93,10 @@ The following .Net types are implements as primatives. In each case a string rep
 ##FSON Limitations
 A list of limitations of FSON. Where these are by design that is indicated. Others should perhaps be lifted.
 
-### No Multi Field Union Types
+### No Multi Field Union Types - Maybe
 Union types with multiple fields are not supported. In principle it shoud be possible to support multiple fields. Those with labels would be supported like in the case of records. Unlabled fields would need to be designated using say a '-'.
 
-### No Single Line Collections
+### No Single Line Collections - Maybe
 Collections must be written one element per line even when they could be un-ambiguously written several per line. For example given
 ```
 type Occupation = 
@@ -113,7 +113,13 @@ Occupations: Cook Painter
 ```
 It may be worth allowing this where possible, for example Union Types without data.  
 
-### No Environment to Support "let" Bindings
+### No Support for Validation - A Goal
+By convention, the parser could invoke a standard `validate` function with the type constructed.
+
+### No Support for Constained Strings and other Types - A Goal
+FSharp does not support Dependant Types but several authors have outlined how the type and module system could be used to implement similar features, for example  [constrained types])http://fsharpforfunandprofit.com/posts/designing-with-types-non-strings/). Providing support for these would be useful when entering data. 
+
+### No Environment to Support "let" Bindings - Maybe
 Currenlty the FSONParser parses a single type passed to the parseFSON function and returns the matching instance. YAML contains the notion of references to avoid duplication when editing. A similar extension would be to parse a environment of typed binding of the form `<identifier>:<type><data>`. A special binding called `root` is the one to be returned. For example:
 ```
 home: Address 
@@ -141,13 +147,7 @@ One approach might to be have a way to denote a type as a *reference* type and b
 
 This change will add a lot of complexity that may not be worth while. The more advanced YAML feature do not seem to get used much, possibly due to the complexity. But it could be that the better tooling support possible due to typing may make it simpler to use.
 
-### No Support for Validation
-By convention, the parser could invoke a standard `validate` function with the type constructed.
-
-### No Support for Constained Strings and other Types
-FSharp does not support Dependant Types but several authors have outlined how the type and module system could be used to implement similar features, for example  [constrained types])http://fsharpforfunandprofit.com/posts/designing-with-types-non-strings/). Providing support for these would be useful when entering data. 
-
-### No Support for Classes
+### No Support for Classes - Maybe?
 The supported types are limited to the FSharp types. There is no support for classes and other OO types. This probably limits the appeal of TypeUp to c# developers. 
 
 ### Fixed Field Order - By Design
