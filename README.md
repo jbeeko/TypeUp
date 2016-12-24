@@ -95,16 +95,20 @@ Union types with multiple fields are not supported. In principle it shoud be pos
 
 #### Field Order
 Fields in FSON must be provided in the order they are declared in the type begining parsed. This definitly simplifies the parser. But it also gives a consistent expectation when entering data. If Address is defined as
-```type Address = 
+```
+type Address = 
     {Street: string;
     City: string; Region: Jurisdiction; 
     Postal: string option;
-    Country: string;}```
+    Country: string;}
+    ```
 Then the FSON will always be written as
-```Street: 3345 West 14th
+```
+Street: 3345 West 14th
 City: Vancouver
 Region: BC
-Country: Canada``` 
+Country: Canada
+``` 
 
 Where the postal code is optional. Enforcing the order is good thing. 
 
