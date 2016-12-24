@@ -101,7 +101,7 @@ type Address =
     City: string; Region: Jurisdiction; 
     Postal: string option;
     Country: string;}
-    ```
+```
 Then the FSON will always be written as
 ```
 Street: 3345 West 14th
