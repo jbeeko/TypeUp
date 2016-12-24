@@ -147,6 +147,9 @@ By convention, the parser could invoke a standard `validate` function with the t
 ### No Support for Constained Strings and other Types
 FSharp does not support Dependant Types but several authors have outlined how the type and module system could be used to implement similar features, for example  [constrained types])http://fsharpforfunandprofit.com/posts/designing-with-types-non-strings/). Providing support for these would be useful when entering data. 
 
+### No Support for Classes
+The supported types are limited to the FSharp types. There is no support for classes and other OO types. This probably limits the appeal of TypeUp to c# developers. 
+
 ### Fixed Field Order - By Design
 Fields in FSON must be provided in the order they are declared in the type begining parsed. This definitly simplifies the parser. But it also gives a consistent expectation when entering data. If Address is defined as
 ```
@@ -268,6 +271,8 @@ and Contract = {
     Jurisdiction : Jurisdiction;
     Provider : LegalEntity;
     Holder : LegalEntity}
+
+
 let data = "
 Number: 34343
 ID:  872ccb13-2e12-4eec-a2f5-ab64b3652b1c
@@ -309,7 +314,7 @@ let contract = (parseFSON typeof<Contract> data) :?> Contract
 
 ```
 
-This will result in the following FSI output 
+Sending the above to FSharp Interactive results in:
 
 ``` 
 val it : Models.Contract =
