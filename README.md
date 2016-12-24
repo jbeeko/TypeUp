@@ -96,7 +96,7 @@ Union types with multiple fields are not supported. In principle it shoud be pos
 #### Ad-hoc Comments
 Comments are widely used in configuration files. They are not supported by FSON for three reasons:
 
-1. Adding support for them will probably require introducing either delimaters or escape characters. This will make the language harder to user for novices. 
+1. Adding support for them will probably require introducing either delimaters or escape characters. For example if `\\` was to designate line end comments then the field `WebSite: https:\\mysite.com` will not be parsed correctly. This will make the language harder to user for novices. 
 2. Since ad-hoc comments a not part of the model they will be lost when recreating the text from from the parsed data. This limits their usefulness.
 3. In many cases if something warrents a commont or note it should be in the data model. Either explicitly or there should be an optional `Notes:` field. 
 
