@@ -200,11 +200,9 @@ type Address = {
 
 type Jurisdiction = 
     | BC | Alberta | Saskatchewan | Manitoba | Ontario | Quebec 
-    | NewBrunswick | NewFoundland | PEI  | Yukon | Canada
 
 type Occupation = 
-    | Programmer | Doctor | Pilot
-    | Cook | Painter
+    | Programmer | Doctor | Pilot | Cook | Painter
 
 type Person = {
     Name : string;
@@ -225,7 +223,6 @@ and Company = {
 and LegalEntity = 
     | Person of Person
     | Company of Company
-    | Tag of String
 
 and Contract = {
     Number : Int64;

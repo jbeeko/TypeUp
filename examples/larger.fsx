@@ -6,25 +6,20 @@ open System.Net.Mail
 open FSONParser
 
 type Phone =
-    | Mobile of String
-    | Office of String
-    | Home of String
-    | AfterHours of String 
-    | Other of String
+    | Mobile of string
+    | Office of string
 
 type Address = {
-    Street: String;
-    City: String; Region: String; 
-    Postal: String option;
-    Country: String}
+    Street: string;
+    City: string; Region: string; 
+    Postal: string option;
+    Country: string}
 
 type Jurisdiction = 
     | BC | Alberta | Saskatchewan | Manitoba | Ontario | Quebec 
-    | NewBrunswick | NewFoundland | PEI  | Yukon | Canada
 
 type Occupation = 
-    | Programmer | Doctor | Pilot
-    | Cook | Painter
+    | Programmer | Doctor | Pilot | Cook | Painter
 
 type Person = {
     Name : string;
@@ -37,7 +32,7 @@ type Person = {
     Address : Address}
 
 and Company = {
-        Name: String;
+        Name: string;
         WebSite: Uri;
         IncorporationLoc: Jurisdiction;
         BeneficialOwner: LegalEntity}
@@ -45,10 +40,9 @@ and Company = {
 and LegalEntity = 
     | Person of Person
     | Company of Company
-    | Tag of String
 
 and Contract = {
-    Number : Int64;
+    Number : int64;
     ID : Guid;
     Start : DateTime;
     Jurisdiction : Jurisdiction;
