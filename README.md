@@ -46,16 +46,17 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very simple example (a larger example is [here](#Appendix-I-Larger-Example)), and tooling support is still rudimentatary but already the advantage using FSharp as a data definition language can be seen. For example a misnamed field results in
+This is a very simple example (a larger example is [here](#Appendix-I-Larger-Example)), and tooling support is rudimentatary but the advantage using FSharp as a data definition language can be seen. For example a misnamed field results in
 ```
-Failure: Error in Ln: 7 Col: 5
-Cityxx: Vancouver
-    ^
+Error in Ln: 7 Col: 1
+Cty: Vancouver
+^
+Expecting: 'City:'
 ```
 
 and an out of range value results in:
 ```
-Failure: Error in Ln: 3 Col: 9
+Error in Ln: 3 Col: 9
 Number: 3670555555555555555555555
         ^
 Value was either too large or too small for an Int16.

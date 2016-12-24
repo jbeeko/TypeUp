@@ -72,7 +72,7 @@ let pprimative t =
     mayThrow(restOfLine false |>> (primFromString t))
 
 let rec pfieldName (f: Reflection.PropertyInfo) =
-    pstring f.Name >>.pchar ':'
+    pstring (f.Name + ":")
 
 and pfield (f: Reflection.PropertyInfo) =
     if FSharpType.IsOption f.PropertyType then
