@@ -6,7 +6,7 @@ TypeUp is useful where typed data or documents need to be specified in a text fi
 
 For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
 
-Here, `../../examples/simple.fsx`,  is an example of defining a type, creating some data and parsing it.
+Here, `../../examples/tiny.fsx`,  is an small example of defining a type, creating some data and parsing it.
 
 ```
 #r @"..\build\FSONParser.dll"
@@ -46,7 +46,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very simple example (a larger example is [here](#Appendix-I-Larger-Example)), and tooling support is rudimentatary but the power using FSharp as a data definition language can be seen. For example a misnamed field results in
+This was a very simple example (a larger example is [here](#Appendix-I-Larger-Example)), and tooling support is rudimentatary but the power using FSharp as a data definition language can be seen. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 1
 Cty: Vancouver
@@ -168,7 +168,7 @@ FSharp does not support Dependant Types but several authors have outlined how th
 
 ## Appendix I Larger Example
 
-Here `../../examples/complex.fsx` is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
+Here `../../examples/larger.fsx` is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
 
 ```
 #r @"..\build\FSONParser.dll"
