@@ -150,7 +150,6 @@ root: Person
 ```
 The benefit of this complication is that it allows the reuse of specific values. 
 
-
 #### Validation Approach
 
 #### Support for Constained Strings and Types
