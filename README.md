@@ -125,6 +125,7 @@ Collections are not working. There seem to be two issues:
 #### Better Error Messages
 
 ### FSON Language Extensions
+This is a list of proposed extenstions to the FSON language.
 
 #### "let" Bindings
 Currenlty the FSONParser parses a single type passed to the parseFSON function. An extension would be to parse a environment of typed binding of the form `<identifier>:<type><data>`. A special binding called `root` is the one to be returned. For example:
@@ -150,9 +151,11 @@ root: Person
 ```
 The benefit of this complication is that it allows the reuse of specific values. 
 
-#### Validation Approach
+#### Validation
+By convention, provided it exists the parser could invoke a `validate` member for the type created.
 
 #### Support for Constained Strings and Types
+FSharp does not support Dependant Types but several authors have outlined how the type and module system could be used to defined [constrained types](http://fsharpforfunandprofit.com/posts/designing-with-types-non-strings/). The parser could follow a convetion where is a specific function or constructor exists it will be invoked. 
 
 ## Appendix I Larger Example
 
