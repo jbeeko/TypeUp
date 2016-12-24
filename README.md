@@ -6,7 +6,7 @@ TypeUp is useful where typed data or documents need to be specified in a text fi
 
 For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
 
-Here, `../../examples/tiny.fsx`,  is an small example of defining a type, creating some data and parsing it.
+Here, `../../examples/small.fsx`,  is an small example of defining a type, creating some data and parsing it.
 
 ```
 #r @"..\build\FSONParser.dll"
@@ -93,6 +93,13 @@ The following .Net types are implements as primatives. In each case a string rep
 #### Multi field Union types
 Union types with multiple fields are not supported. In principle it shoud be possible to support multiple fields. Those with labels would be supported like in the case of records. Unlabled fields would need to be designated using say a '-'.
 
+#### Ad-hoc Comments
+Comments are widely used in configuration files. They are not supported by FSON for three reasons:
+
+1. Adding support for them will probably require introducing either delimaters or escape characters. This will make the language harder to user for novices. 
+2. Since ad-hoc comments a not part of the model they will be lost when recreating the text from from the parsed data. This limits their usefulness.
+3. In many cases if something warrents a commont or note it should be in the data model. Either explicitly or there should be an optional `Notes:` field. 
+
 
 ## FSON Parser
 
@@ -158,7 +165,7 @@ root: Person
     Occupations:
     Address: <home>
 ```
-The benefit of this complication is that it allows the reuse of specific values. 
+The benefit of this complication is that it allows the reuse of specific values. The tricky bit is how to integrate this into round tripping i.e. how to go from `text -> type -> text2` and have `text = text2`?
 
 #### Validation
 By convention, the parser could invoke a standard `validate` function with the type constructed.
