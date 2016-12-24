@@ -110,7 +110,24 @@ Region: BC
 Country: Canada
 ``` 
 
-Where the postal code is optional. Enforcing the order is good thing. 
+Where the postal code is optional. Enforcing the order is desirable. There is no purpose to letting users enter this in an arbitrary order. 
+
+#### Single Line Collections
+Collections must be written one element per line even when they could be un-ambiguously written several per line. For example given
+```
+type Occupation = 
+    | Programmer | Doctor | Pilot | Cook | Painter
+
+type Person =
+    {Name : string;
+    Occupations : Occupation list}
+```
+The FSON could be written as 
+```
+Name: Bill
+Occupations: Cook Painter
+```
+It may be worth allowing this where possible, for example Union Types without data.  
 
 #### Ad-hoc Comments
 Comments are widely used in configuration files. They are not supported by FSON for three reasons:
@@ -123,16 +140,18 @@ Comments are widely used in configuration files. They are not supported by FSON 
 ## Roadmap
 
 ### FSON Parser
-The current implementation is a 
+The current implementation is very simple. It walks the provided type from the top down in the order of declaration and uses `FSharpReflection` to build the instance. Parsing is very simple (not even really parsing) because the types to expect are know. For exmample when encountering a field defined to be `double` it is sufficient to take all the characters up to the next field and call `Double.Parse`. If it works great, if not an error can be show. 
+
+Combinators from the library [FParsec](http://www.quanttec.com/fparsec/) are used to string the parsing together. 
 
 
 ### Fix Outstanding Issues
 
 #### Better Error Messages
-So far the error messages are the default provided by FParsec, they are already amazingly good but could be improved in a few places. 
+So far the error messages are the default provided by FParsec, they are already surprizingly good but could be improved in a few places. 
 
 #### Indent Based Parsing
-The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. 
+The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. This is also needed to reliably support collections. 
 
 #### Options
 The parser currently only works for `string option`. This is due an issue constructing the correct type to pass to `FSharpValue.MakeRecord`. 
@@ -206,9 +225,6 @@ open FSONParser
 type Phone =
     | Mobile of String
     | Office of String
-    | Home of String
-    | AfterHours of String 
-    | Other of String
 
 type Address = {
     Street: String;
