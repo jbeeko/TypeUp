@@ -45,7 +45,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very small model (a larger example is [here](#Appendix-I-Larger-Example)), but even so the power of using FSharp types as a data definition language is apperent. For example a misnamed field results in
+This is a very small model (a larger example is [here](#Appendix-I-Larger-Example)), but even so the potential of FSharp types as a data definition language is apperent. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 1
 Cty: Vancouver
