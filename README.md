@@ -5,7 +5,7 @@ TypeUp is useful where typed data or documents need to be specified in a text fi
 
 For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
 
-Here, `../../examples/small.fsx`,  is an small example of defining a type, creating some data and parsing it.
+Here, `../../examples/small.fsx`,  is an small example (a larger one is [here](#larger-example)) of defining a type, creating some data and parsing it. 
 
 ```
 #r @"..\build\FSONParser.dll"
@@ -45,7 +45,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very small model (a larger example is [here](#Appendix-I-Larger-Example)), but even so the potential of FSharp types as a data definition language is apperent. For example a misnamed field results in
+This is a very small model, but even so the potential of FSharp types as a data definition language is apperent. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 1
 Cty: Vancouver
@@ -213,7 +213,7 @@ A language server for VCCode should be able to provide the following:
 * Commands to add new elements to a list. For example if a LegalEntity has a list of owners the language server should provide a command to *Add Owner* This should drop in a new empty template to be completed.  
 
 
-## Appendix I Larger Example
+##Larger Example
 
 Here `../../examples/larger.fsx` is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
 
