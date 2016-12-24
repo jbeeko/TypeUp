@@ -2,11 +2,11 @@
 
 TypeUp consists of a FSharp Object Notation (FSON) language and a matching FSONParser. TypeUp lets you represent a wide range of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. 
 
-TypeUp is useful where typed data needs to be specified in a text file. For example configuration files or structured documents such as contracts or service definition documents. 
+TypeUp is useful where typed data or documents need to be specified in a text file. For example project configuration files, blog posts, contracts and, service definition documents. 
 
-For the FSharp developer TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the JSON structure into the FSharp types. 
+For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
 
-[Here](../../examples/simple.fsx) is an example of defining a type, creating some data and parsing it.
+Here, `../../examples/simple.fsx`,  is an example of defining a type, creating some data and parsing it.
 
 ```
 #r @"..\build\FSONParser.dll"
@@ -62,7 +62,7 @@ Number: 3670555555555555555555555
 Value was either too large or too small for an Int16.
 ```
 
-Missing fields, extra fields, wrong types etc result in similar errors. This lets users enter structured data without the need for custom user interfaces. 
+Missing fields, extra fields, wrong types etc result in similar errors. 
 
 ## FSON Language
 
@@ -104,6 +104,9 @@ Union types with multiple fields are not supported. In principle it shoud be pos
 
 ### Fix Outstanding Issues
 
+#### Better Error Messages
+So far the error messages are the default provided by FParsec, they are already amazingly good but could be improved in a few places. 
+
 #### Indent Based Parsing
 The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. 
 
@@ -120,9 +123,15 @@ Collections are not working. There seem to be two issues:
 
 ### Tooling Support
 
-#### Language Engine for VSCode
+#### Compiler Services
+To support editor tooling the FSONParser needst to be able to provide access to the verious syntactic elements like lists of Field names, union cases etc. 
 
-#### Better Error Messages
+#### Language Server for VSCode and other editors
+A language server for VCCode should be able to provide the following:
+* Reparsing after edits to provide feedback
+* Suggestions for mistyped field names
+* "inellisense" for things like union cases
+* Commands to add new elements to a list. For example if a LegalEntity has a list of owners the language server should provide a command to *Add Owner* This should drop in a new empty template to be completed.  
 
 ### FSON Language Extensions
 This is a list of proposed extenstions to the FSON language.
@@ -152,14 +161,14 @@ root: Person
 The benefit of this complication is that it allows the reuse of specific values. 
 
 #### Validation
-By convention, provided it exists the parser could invoke a `validate` member for the type created.
+By convention, the parser could invoke a standard `validate` function with the type constructed.
 
-#### Support for Constained Strings and Types
-FSharp does not support Dependant Types but several authors have outlined how the type and module system could be used to defined [constrained types](http://fsharpforfunandprofit.com/posts/designing-with-types-non-strings/). The parser could follow a convetion where is a specific function or constructor exists it will be invoked. 
+#### Support for Constained Strings and other Types
+FSharp does not support Dependant Types but several authors have outlined how the type and module system could be used to implement similar features, for example  [constrained types])http://fsharpforfunandprofit.com/posts/designing-with-types-non-strings/). Providing support for these would be useful when entering data. 
 
 ## Appendix I Larger Example
 
-[Here](../../examples/complex.fsx) is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
+Here `../../examples/complex.fsx` is a larger example demonstrating a wider range of primative values, nested records, union types and collections.
 
 ```
 #r @"..\build\FSONParser.dll"
