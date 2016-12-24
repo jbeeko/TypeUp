@@ -93,6 +93,21 @@ The following .Net types are implements as primatives. In each case a string rep
 #### Multi field Union types
 Union types with multiple fields are not supported. In principle it shoud be possible to support multiple fields. Those with labels would be supported like in the case of records. Unlabled fields would need to be designated using say a '-'.
 
+#### Field Order
+Fields in FSON must be provided in the order they are declared in the type begining parsed. This definitly simplifies the parser. But it also gives a consistent expectation when entering data. If Address is defined as
+```type Address = 
+    {Street: string;
+    City: string; Region: Jurisdiction; 
+    Postal: string option;
+    Country: string;}```
+Then the FSON will always be written as
+```Street: 3345 West 14th
+City: Vancouver
+Region: BC
+Country: Canada``` 
+
+Where the postal code is optional. Enforcing the order is good thing. 
+
 #### Ad-hoc Comments
 Comments are widely used in configuration files. They are not supported by FSON for three reasons:
 
@@ -101,13 +116,11 @@ Comments are widely used in configuration files. They are not supported by FSON 
 3. In many cases if something warrents a commont or note it should be in the data model. Either explicitly or there should be an optional `Notes:` field. 
 
 
-## FSON Parser
-
-### Validation Approach
-
-### Adding Primatives
-
 ## Roadmap
+
+### FSON Parser
+The current implementation is a 
+
 
 ### Fix Outstanding Issues
 
@@ -137,7 +150,8 @@ To support editor tooling the FSONParser needst to be able to provide access to 
 A language server for VCCode should be able to provide the following:
 * Reparsing after edits to provide feedback
 * Suggestions for mistyped field names
-* "inellisense" for things like union cases
+* Suggestions for things like union cases
+* Hints in the case of missing options
 * Commands to add new elements to a list. For example if a LegalEntity has a list of owners the language server should provide a command to *Add Owner* This should drop in a new empty template to be completed.  
 
 ### FSON Language Extensions
