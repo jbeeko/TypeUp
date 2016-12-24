@@ -46,7 +46,7 @@ val it : Address = {Number = 3670s;
 >
 ```
 
-This is a very simple example (a larger example is [here](#Appendix-I-Larger-Example)), and tooling support is rudimentatary but the advantage using FSharp as a data definition language can be seen. For example a misnamed field results in
+This is a very simple example (a larger example is [here](#Appendix-I-Larger-Example)), and tooling support is rudimentatary but the power using FSharp as a data definition language can be seen. For example a misnamed field results in
 ```
 Error in Ln: 7 Col: 1
 Cty: Vancouver
@@ -62,7 +62,7 @@ Number: 3670555555555555555555555
 Value was either too large or too small for an Int16.
 ```
 
-Even better messages with better tooling support such as intellisense and suggestions would allow expert domain users to enter structured data without the need for domain specific UIs. 
+Missing fields, extra fields, wrong types etc result in similar errors. With even better messages and better tooling support such as intellisense expert users could enter structured data without the need for custom user interfaces. 
 
 ## FSON Language
 
@@ -127,6 +127,29 @@ Collections are not working. There seem to be two issues:
 ### FSON Language Extensions
 
 #### "let" Bindings
+Currenlty the FSONParser parses a single type passed to the parseFSON function. An extension would be to parse a environment of typed binding of the form `<identifier>:<type><data>`. A special binding called `root` is the one to be returned. For example:
+```
+home: Address 
+    Number: 3670
+    Street: 245 West Howe
+    City: Vancouver
+    Region: BC
+    Country: Canada
+```
+This binding could then be used when defining subsequent values. For example: 
+```
+root: Person 
+    Name: Bill Smith
+    DOB: 1988-01-20
+    eMail: bill@co.com
+    Phone: Mobile 604 666 7777
+    WebSite: http://www.bill.com
+    IP: 127.0.0.1
+    Occupations:
+    Address: <home>
+```
+The benefit of this complication is that it allows the reuse of specific values. 
+
 
 #### Validation Approach
 
