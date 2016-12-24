@@ -62,7 +62,7 @@ Number: 3670555555555555555555555
 Value was either too large or too small for an Int16.
 ```
 
-Missing fields, extra fields, wrong types etc result in similar errors. With even better messages and better tooling support such as intellisense expert users could enter structured data without the need for custom user interfaces. 
+Missing fields, extra fields, wrong types etc result in similar errors. This lets users enter structured data without the need for custom user interfaces. 
 
 ## FSON Language
 
