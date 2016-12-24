@@ -1,5 +1,5 @@
 # TypeUp
-TypeUp consists of a FSharp Object Notation (FSON) language and a matching FSONParser. TypeUp lets you represent a wide range of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. 
+TypeUp consists of a FSharp object notation (FSON) and a matching FSONParser. TypeUp lets you represent a wide range of FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. 
 
 TypeUp is useful where typed data or documents need to be specified in a text file. For example project configuration files, blog posts, contracts and, service definition documents. 
 
