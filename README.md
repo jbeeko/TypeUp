@@ -66,6 +66,8 @@ Missing fields, extra fields, wrong types etc result in similar errors.
 
 ## FSON Language
 
+### Why Another Object Notation Language?
+
 ### Comparison to YAML
 
 ### Block Structure
