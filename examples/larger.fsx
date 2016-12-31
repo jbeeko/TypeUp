@@ -47,7 +47,7 @@ and Contract = {
     Number : int64;
     ID : Guid;
     Start : DateTime;
-    Jurisdiction : Jurisdiction;
+    Jurisdiction : Jurisdiction option;
     Provider : LegalEntity;
     Holder : LegalEntity}
 let data = "

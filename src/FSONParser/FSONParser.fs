@@ -21,6 +21,21 @@ let cons element list =
         |> Seq.exactlyOne
     Reflection.FSharpValue.MakeUnion(uc, [|box element; box list|])
 
+let some element = 
+    let ty = element.GetType()
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ option>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Some") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [|box element|])
+
+let none ty = 
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ option>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "None") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [| |])
+
 let castToSting (s : obj)  =
     // used for hacks where reflection is not understood
     s :?> String
@@ -84,8 +99,8 @@ let rec pfieldName (f: Reflection.PropertyInfo) =
 
 and pfield (f: Reflection.PropertyInfo) =
     if FSharpType.IsOption f.PropertyType then
-        //This is avery limited support for options, only string options are supported. 
-        opt (pfieldName f>>.ptype (f.PropertyType.GenericTypeArguments |> Seq.exactlyOne)|>> castToSting)|>>box
+        let t = f.PropertyType.GenericTypeArguments |> Seq.exactlyOne
+        ((pfieldName f>>.ptype t |>> some) <|>% (none t)) |>> box
     else 
         pfieldName f>>.ptype f.PropertyType
 

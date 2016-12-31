@@ -38,3 +38,18 @@ let cons element list =
 let emp = empty ("".GetType())
 
 cons "bar" (cons "foo" emp)
+
+
+let ty = typeof<string>
+Reflection.FSharpType.GetUnionCases(typedefof<_ option>.MakeGenericType [|ty|]) 
+
+
+let some element = 
+    let ty = element.GetType()
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ option>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Some") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [|box element|])
+
+some "foo"
