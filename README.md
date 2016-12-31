@@ -192,9 +192,6 @@ So far the error messages are the default provided by FParsec, they are already 
 #### Indent Based Parsing
 The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. This is also needed to reliably support collections. 
 
-#### Options
-The parser currently only works for `string option`. This is due an issue constructing the correct type to pass to `FSharpValue.MakeRecord`. 
-
 #### Collections
 Collections are not working. There seem to be two issues:
 
