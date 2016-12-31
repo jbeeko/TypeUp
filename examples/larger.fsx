@@ -66,7 +66,9 @@ Provider:
         Phone: Mobile 604 666 7777
         WebSite: http://www.bill.com
         IP: 127.0.0.1
-        Occupations: - Doctor
+        Occupations: 
+            - Doctor 
+            - Pilot
         Address: 
             Street: 245 West Howe
             City: Vancouver

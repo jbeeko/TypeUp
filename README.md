@@ -196,7 +196,6 @@ The current parser does not implement indent based parsing and hence can't parse
 Collections are not working. There seem to be two issues:
 
 1) knowing when to stop applying the parser parsing list elements `many` from `FParsec`. 
-2) like in the case of options knowing how to return a correclty typed list to `FSharpValue.MakeRecord`. 
 
 
 ### Tooling Support
