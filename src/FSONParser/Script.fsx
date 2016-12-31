@@ -1,6 +1,6 @@
 #r @"..\..\build\FParsecCS.dll"
 #r @"..\..\build\FParsec.dll"
-#r @"..\..\build\FSONParser.dll"
+#load @".\FSONParser.fs"
 open FSONParser
 
 type Jurisdiction = 
@@ -18,4 +18,23 @@ City: Vancouver
 Region: BC
 Country: Canada"
 
-(parseFSON typeof<Address> data) :?> Address
+let addr = (parseFSON typeof<Address> data) :?> Address
+
+let empty ty = 
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Empty") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [||])
+
+let cons element list = 
+    let ty = element.GetType()
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Cons") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [|box element; box list|])
+
+let emp = empty ("".GetType())
+
+cons "bar" (cons "foo" emp)

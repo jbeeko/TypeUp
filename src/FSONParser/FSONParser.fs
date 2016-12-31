@@ -13,6 +13,14 @@ let empty ty =
         |> Seq.exactlyOne
     Reflection.FSharpValue.MakeUnion(uc, [||])
 
+let cons element list = 
+    let ty = element.GetType()
+    let uc = 
+        Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
+        |> Seq.filter (fun uc -> uc.Name = "Cons") 
+        |> Seq.exactlyOne
+    Reflection.FSharpValue.MakeUnion(uc, [|box element; box list|])
+
 let castToSting (s : obj)  =
     // used for hacks where reflection is not understood
     s :?> String
@@ -96,14 +104,14 @@ and punioninfo  (t: Type) =
         |> Array.map (fun c -> spaces>>.pstring c.Name.>>spaces>>%c)
     choiceL parsers (sprintf "Expecting a case of %s" t.Name)
 
-and punioncase  (c: UnionCaseInfo) =
-    let makeType case args = 
-        FSharpValue.MakeUnion(case, args)
+and punioncase  (cInfo: UnionCaseInfo) =
+    let makeType caseInfo args = 
+        FSharpValue.MakeUnion(caseInfo, args)
     let initial : Parser<obj[], unit> = preturn [||]
-    let vals = c.GetFields()
+    let vals = cInfo.GetFields()
             |> Array.map (fun f -> (ptype f.PropertyType.>>spaces) |>> Array.singleton)
             |> Array.fold (fun p1 p2 -> pipe2 p1 p2 Array.append) initial
-    vals |>> makeType c
+    vals |>> makeType cInfo
 
 and punion (t : Type)  =
     punioninfo t >>= punioncase 
@@ -113,8 +121,12 @@ and plistelement (t : Type) =
     
 and plist (t : Type) =
     let elementT  = t.GenericTypeArguments |> Seq.exactlyOne
-    let initial = empty elementT
-    many (plistelement elementT)|>>List.singleton>>%initial|>>box
+    let emptyT = empty elementT
+
+    let mockElement = FSharpValue.MakeUnion((FSharpType.GetUnionCases elementT).[1], [||]) 
+    let mockList = cons mockElement  emptyT
+
+    many (plistelement elementT)|>>box>>%mockList|>>box
 
 and ptype(t : Type)  =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None

@@ -1,4 +1,6 @@
-#r @"..\build\FSONParser.dll"
+#r @"..\build\FParsecCS.dll"
+#r @"..\build\FParsec.dll"
+#load @"..\src\FSONParser\FSONParser.fs"
 
 open System
 open System.Net
@@ -64,7 +66,7 @@ Provider:
         Phone: Mobile 604 666 7777
         WebSite: http://www.bill.com
         IP: 127.0.0.1
-        Occupations:
+        Occupations: - Doctor
         Address: 
             Street: 245 West Howe
             City: Vancouver
@@ -85,4 +87,6 @@ Holder:
         Region: BC
         Country: Canada"
 
+
 let contract = (parseFSON typeof<Contract> data) :?> Contract
+
