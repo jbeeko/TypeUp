@@ -53,3 +53,10 @@ let some element =
     Reflection.FSharpValue.MakeUnion(uc, [|box element|])
 
 some "foo"
+let init : int list = []
+let folder state head =
+    head :: state
+[1; 2; 3] 
+    |> List.fold  folder init
+    |> List.rev
+

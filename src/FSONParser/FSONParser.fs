@@ -136,12 +136,12 @@ and plistelement (t : Type) =
     
 and plist (t : Type) =
     let elementT  = t.GenericTypeArguments |> Seq.exactlyOne
-    let emptyT = empty elementT
+    let toListT elements =
+        let folder state head =
+            cons head  state
+        elements |> List.fold folder (empty elementT)
 
-    let mockElement = FSharpValue.MakeUnion((FSharpType.GetUnionCases elementT).[1], [||]) 
-    let mockList = cons mockElement  emptyT
-
-    many (plistelement elementT)|>>box>>%mockList|>>box
+    many (plistelement elementT)|>>toListT|>>box
 
 and ptype(t : Type)  =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None

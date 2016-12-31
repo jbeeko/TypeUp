@@ -82,7 +82,7 @@ Holder:
     Phone: Office 604 666 8888
     WebSite: http://www.anne.com
     IP: 2001:0:9d38:6abd:2c48:1e19:53ef:ee7e
-    Occupations: 
+    Occupations: - Cook
     Address:
         Street: 5553 West 12th Ave
         City: Vancouver
