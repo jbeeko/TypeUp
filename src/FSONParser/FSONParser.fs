@@ -36,10 +36,6 @@ let none ty =
         |> Seq.exactlyOne
     Reflection.FSharpValue.MakeUnion(uc, [| |])
 
-let castToSting (s : obj)  =
-    // used for hacks where reflection is not understood
-    s :?> String
-
 let (<!>) (p: Parser<_,_>) label : Parser<_,_> =
     fun stream ->
         printfn "%A: Entering %s" stream.Position label
@@ -140,7 +136,7 @@ and plist (t : Type) =
         let folder state head =
             cons head  state
         elements |> List.fold folder (empty elementT)
-
+        
     many (plistelement elementT)|>>toListT|>>box
 
 and ptype(t : Type)  =
