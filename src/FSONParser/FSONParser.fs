@@ -55,6 +55,9 @@ type FSharpType with
     static member IsOption (t : Type) = t.Name = "FSharpOption`1"
 
 type FSharpType with
+    static member IsArray (t : Type) = t.IsArray
+
+type FSharpType with
     static member IsList (t : Type) = t.Name = "FSharpList`1"
 
 type MailAddress with
@@ -126,23 +129,33 @@ and punioncase  (cInfo: UnionCaseInfo) =
 and punion (t : Type)  =
     punioninfo t >>= punioncase 
 
-and plistelement (t : Type) =
+and pelement (t : Type) =
     spaces>>.pstring "-">>.ptype t
-    
+
+and parray (t : Type) =
+    let elementT = t.GetElementType()
+    let toArrayT (elements : obj list)  =
+        let arrayT = Array.CreateInstance(elementT, elements.Length)
+        for i = 0 to (elements.Length - 1) do
+            arrayT.SetValue(elements.[i], i)
+        arrayT
+
+    many (pelement elementT)|>>toArrayT|>>box
+
 and plist (t : Type) =
-    printfn "type is %O" t
     let elementT  = t.GenericTypeArguments |> Seq.exactlyOne
     let toListT elements =
         let folder state head =
             cons head  state elementT
         elements |> List.fold folder (empty elementT)
 
-    many (plistelement elementT)|>>toListT|>>box
+    many (pelement elementT)|>>toListT|>>box
 
 and ptype(t : Type)  =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
     let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
     let (|List|_|) t = if FSharpType.IsList(t) then Some(t) else None
+    let (|Array|_|) t = if FSharpType.IsArray(t) then Some(t) else None
     
     let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
     let (|URL|_|) t = if t = typeof<Uri> then Some(t) else None        
@@ -156,6 +169,7 @@ and ptype(t : Type)  =
     | Primative t -> pprimative t
     
     | List t -> plist t
+    | Array t -> parray t
     | Record t -> precord t
     | Union t -> punion t
     | _ -> fail "Unsupported type"

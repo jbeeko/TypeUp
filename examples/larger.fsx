@@ -30,7 +30,7 @@ type Person = {
     Phone : Phone;
     WebSite : Uri;
     IP : IPAddress;
-    Occupations : Occupation list;
+    Occupations : Occupation array;
     Address : Address}
 
 and Company = {
