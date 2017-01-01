@@ -37,7 +37,7 @@ and Company = {
         Name: string;
         WebSite: Uri;
         IncorporationLoc: Jurisdiction;
-        BeneficialOwner: LegalEntity}
+        BeneficialOwners: LegalEntity list}
 
 and LegalEntity = 
     | Person of Person
@@ -59,22 +59,22 @@ Provider:
     Company Name: Acme Widgets
     WebSite: http://www.acme.com
     IncorporationLoc: BC
-    BeneficialOwner:
-        Person Name: Bill Smith
-        DOB: 1988-01-20
-        eMail: bill@co.com
-        Phone: Mobile 604 666 7777
-        WebSite: http://www.bill.com
-        IP: 127.0.0.1
-        Occupations: 
-            - Doctor 
-            - Pilot
-        Address: 
-            Street: 245 West Howe
-            City: Vancouver
-            Region: BC
-            Postal: V6R-3L6
-            Country: Canada
+    BeneficialOwners:
+        -   Person Name: Bill Smith
+            DOB: 1988-01-20
+            eMail: bill@co.com
+            Phone: Mobile 604 666 7777
+            WebSite: http://www.bill.com
+            IP: 127.0.0.1
+            Occupations: 
+                - Doctor 
+                - Pilot
+            Address: 
+                Street: 245 West Howe
+                City: Vancouver
+                Region: BC
+                Postal: V6R-3L6
+                Country: Canada
 Holder: 
     Person Name: Anne Brown
     DOB: 1998-10-25
@@ -88,6 +88,7 @@ Holder:
         City: Vancouver
         Region: BC
         Country: Canada"
+
 
 
 let contract = (parseFSON typeof<Contract> data) :?> Contract

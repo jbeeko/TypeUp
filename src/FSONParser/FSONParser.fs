@@ -13,8 +13,7 @@ let empty ty =
         |> Seq.exactlyOne
     Reflection.FSharpValue.MakeUnion(uc, [||])
 
-let cons element list = 
-    let ty = element.GetType()
+let cons element list ty = 
     let uc = 
         Reflection.FSharpType.GetUnionCases(typedefof<_ list>.MakeGenericType [|ty|]) 
         |> Seq.filter (fun uc -> uc.Name = "Cons") 
@@ -131,12 +130,13 @@ and plistelement (t : Type) =
     spaces>>.pstring "-">>.ptype t
     
 and plist (t : Type) =
+    printfn "type is %O" t
     let elementT  = t.GenericTypeArguments |> Seq.exactlyOne
     let toListT elements =
         let folder state head =
-            cons head  state
+            cons head  state elementT
         elements |> List.fold folder (empty elementT)
-        
+
     many (plistelement elementT)|>>toListT|>>box
 
 and ptype(t : Type)  =
