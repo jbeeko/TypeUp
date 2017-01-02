@@ -3,4 +3,3 @@ NUGET
     FAKE (4.47.2)
     FParsec (1.0.2)
     FSharp.Core (4.0.0.1)
-    FSharp.Quotations.Evaluator (1.0.7)
