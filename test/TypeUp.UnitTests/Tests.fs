@@ -37,6 +37,9 @@ let tests =
 
       testCase "IP Address" <| fun _ -> Expect.equal ((parseFSON typeof<IPAddress> " 127.0.0.1 ") :?> IPAddress)  (IPAddress.Parse "127.0.0.1")  ""
       testCase "Guid" <| fun _ -> Expect.equal ((parseFSON typeof<Guid> " 872ccb13-2e12-4eec-a2f5-ab64b3652b1c ") :?> Guid)  (Guid.Parse "872ccb13-2e12-4eec-a2f5-ab64b3652b1c") ""
+      testCase "MailAddress" <| fun _ -> Expect.equal ((parseFSON typeof<Guid> " bob@aaa.com ") :?> MailAddress)  (MailAddress.Parse "bob@aaa.com") ""
+      testCase "URL" <| fun _ -> Expect.equal ((parseFSON typeof<Uri> " http://something.com ") :?> Uri)  (Uri.Parse "http://something.com") ""
+      testCase "DateTime" <| fun _ -> Expect.equal ((parseFSON typeof<DateTime> " feb 1, 2016 ") :?> DateTime)  (DateTime.Parse "Feb 1, 2016") ""
     ]
 
     testList "Records" [
