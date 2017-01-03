@@ -102,7 +102,7 @@ let tests =
     ]
 
     testList "Special Cases" [
-      testCase "non sep DU List" <| fun _ -> 
+      ptestCase "non sep DU List" <| fun _ -> 
         Expect.equal ((parseFSON typeof<Region list> "BC Alberta") :?> Region list) [BC; Alberta] ""
     ]
   ]
