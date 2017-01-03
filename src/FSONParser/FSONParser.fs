@@ -81,7 +81,7 @@ let primFromString (t:  Type) str : obj =
     |"System.Byte" -> upcast Byte.Parse(str)
     |"System.SByte" -> upcast SByte.Parse(str)
     |"System.Char" -> upcast Char.Parse(str)
-    |"System.String" -> upcast str.Trim()
+    |"System.String" -> upcast str
     |"System.DateTime" -> upcast DateTime.Parse str
     |"System.Guid" -> upcast Guid.Parse str
     |"System.Uri" -> upcast Uri.Parse str
@@ -90,7 +90,9 @@ let primFromString (t:  Type) str : obj =
     |_ -> failwith "Unsupported primative type"
 
 let pprimative t =
-    mayThrow(restOfLine false |>> (primFromString t))
+    let trim (str : string) =
+        str.Trim()
+    mayThrow(restOfLine false)|>>trim|>>(primFromString t)
 
 let rec pfieldName (f: Reflection.PropertyInfo) =
     pstring (f.Name + ":")
