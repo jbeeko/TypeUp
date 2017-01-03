@@ -81,7 +81,7 @@ let primFromString (t:  Type) str : obj =
     |"System.Byte" -> upcast Byte.Parse(str)
     |"System.SByte" -> upcast SByte.Parse(str)
     |"System.Char" -> upcast Char.Parse(str)
-    |"System.String" -> upcast str
+    |"System.String" -> upcast str.Trim()
     |"System.DateTime" -> upcast DateTime.Parse str
     |"System.Guid" -> upcast Guid.Parse str
     |"System.Uri" -> upcast Uri.Parse str
