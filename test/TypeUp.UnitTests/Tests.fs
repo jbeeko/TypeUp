@@ -100,6 +100,11 @@ let tests =
       testCase "DU Array" <| fun _ -> 
         Expect.equal ((parseFSON typeof<Region array> regionsData) :?> Region array) [|BC; Alberta|] ""
     ]
+
+    testList "Special Cases" [
+      testCase "non sep DU List" <| fun _ -> 
+        Expect.equal ((parseFSON typeof<Region list> "BC Alberta") :?> Region list) [BC; Alberta] ""
+    ]
   ]
 
 
