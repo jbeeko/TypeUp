@@ -11,19 +11,26 @@ type Region =
     | BC | Alberta | Canada
 
 type Address = 
-    {Number: int16;
-    Street: string;
-    City: string; Region: Region; 
+    {Street: string;
+    City: string; 
+    Region: Region; 
     Postal: string option;
     Country: string;}
 
 let addrData = " 
-  Number: 3670 
   Street: 245 West Howe 
   City: Vancouver 
   Region: BC 
+  Postal: V68 5R3
   Country: Canada 
  "
+let addr = {
+  Street = "245 West Howe";
+  City = "Vancouver";
+  Region = BC;
+  Postal = Some("V68 5R3");
+  Country = "Canada"}
+
 let regionsData = "
   - BC
   - Alberta   "
@@ -64,7 +71,7 @@ let tests =
     testList "Records" [
       testCase "parse address" <| fun _ ->
         let address = (parseFSON typeof<Address> addrData) :?> Address
-        Expect.isTrue (address.City = "Vancouver") "Parse an address and check city."
+        Expect.isTrue (address = addr) ""
     ]
 
     testList "Unions" [
