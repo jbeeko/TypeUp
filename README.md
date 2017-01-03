@@ -192,12 +192,6 @@ So far the error messages are the default provided by FParsec, they are already 
 #### Indent Based Parsing
 The current parser does not implement indent based parsing and hence can't parse data like multi-line strings. This is also needed to reliably support collections. 
 
-#### Collections
-Collections are not working. There seem to be two issues:
-
-1) knowing when to stop applying the parser parsing list elements `many` from `FParsec`. 
-
-
 ### Tooling Support
 
 #### Compiler Services

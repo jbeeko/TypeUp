@@ -7,8 +7,14 @@ open System.Net.Mail
 open Expecto
 open FSONParser
 
+type SimpleRecord = {Name : string}
+type OptionRecord = {Name : string option}
+
 type Region = 
     | BC | Alberta | Canada
+let regionsData = "
+  - BC
+  - Alberta   "
 
 type Address = 
     {Street: string;
@@ -16,7 +22,12 @@ type Address =
     Region: Region; 
     Postal: string option;
     Country: string;}
-
+let addr = {
+  Street = "245 West Howe";
+  City = "Vancouver";
+  Region = BC;
+  Postal = Some("V68 5R3");
+  Country = "Canada"}
 let addrData = " 
   Street: 245 West Howe 
   City: Vancouver 
@@ -24,16 +35,9 @@ let addrData = "
   Postal: V68 5R3
   Country: Canada 
  "
-let addr = {
-  Street = "245 West Howe";
-  City = "Vancouver";
-  Region = BC;
-  Postal = Some("V68 5R3");
-  Country = "Canada"}
 
-let regionsData = "
-  - BC
-  - Alberta   "
+  
+
 
 
 [<Tests>]
@@ -69,6 +73,14 @@ let tests =
     ]
 
     testList "Records" [
+      testCase "simple record" <| fun _ ->
+        let record = (parseFSON typeof<SimpleRecord> "Name: Joe") :?> SimpleRecord
+        Expect.isTrue (record = {Name = "Joe"}) ""
+
+      testCase "option record" <| fun _ ->
+        let record = (parseFSON typeof<OptionRecord> "Name: Joe") :?> OptionRecord
+        Expect.isTrue (record = {Name = Some("Joe")}) ""
+
       testCase "parse address" <| fun _ ->
         let address = (parseFSON typeof<Address> addrData) :?> Address
         Expect.isTrue (address = addr) ""
