@@ -10,39 +10,16 @@ open FSONParser
 type SimpleRecord = {Name : string}
 type OptionRecord = {Name : string option}
 
-type Region = 
-    | BC | Alberta | Canada
-let regionsData = "
-  - BC
-  - Alberta   "
+type DU = 
+    | One | Two | Three
 
-type Address = 
-    {Street: string;
-    City: string; 
-    Region: Region; 
-    Postal: string option;
-    Country: string;}
-let addr = {
-  Street = "245 West Howe";
-  City = "Vancouver";
-  Region = BC;
-  Postal = Some("V68 5R3");
-  Country = "Canada"}
-let addrData = " 
-  Street: 245 West Howe 
-  City: Vancouver 
-  Region: BC 
-  Postal: V68 5R3
-  Country: Canada 
- "
-
-  
-
-
+let duData = "
+  - One
+  - Two   "
 
 [<Tests>]
-let tests =
-  testList "All" [
+let tests1 =
+  testList "UnitTests" [
     testList "Primatives" [
       testCase "int16" <| fun _ -> Expect.equal ((parseFSON typeof<int16> "12") :?> int16)  12s ""
       testCase "int32" <| fun _ -> Expect.equal ((parseFSON typeof<int32> "12") :?> int32)  12l ""
@@ -73,39 +50,70 @@ let tests =
     ]
 
     testList "Records" [
-      testCase "simple record" <| fun _ ->
+      testCase "Simple Record" <| fun _ ->
         let record = (parseFSON typeof<SimpleRecord> "Name: Joe") :?> SimpleRecord
         Expect.isTrue (record = {Name = "Joe"}) ""
 
-      testCase "option record" <| fun _ ->
+      testCase "Option Record" <| fun _ ->
         let record = (parseFSON typeof<OptionRecord> "Name: Joe") :?> OptionRecord
         Expect.isTrue (record = {Name = Some("Joe")}) ""
-
-      testCase "parse address" <| fun _ ->
-        let address = (parseFSON typeof<Address> addrData) :?> Address
-        Expect.isTrue (address = addr) ""
     ]
 
     testList "Unions" [
-      testCase "zero field DU" <| fun _ -> Expect.equal ((parseFSON typeof<Region> " BC ") :?> Region)  Region.BC ""
+      testCase "Zero field DU" <| fun _ -> Expect.equal ((parseFSON typeof<DU> " One ") :?> DU)  One ""
     ]
 
     testList "Collections" [
       testCase "DU List" <| fun _ -> 
-        Expect.equal ((parseFSON typeof<Region list> regionsData) :?> Region list) [BC; Alberta] ""
+        Expect.equal ((parseFSON typeof<DU list> duData) :?> DU list) [One; Two] ""
 
       testCase "String List" <| fun _ -> 
-        Expect.equal ((parseFSON typeof<string list> regionsData) :?> string list) ["BC"; "Alberta"] ""
+        Expect.equal ((parseFSON typeof<string list> duData) :?> string list) ["One"; "Two"] ""
 
       testCase "DU Array" <| fun _ -> 
-        Expect.equal ((parseFSON typeof<Region array> regionsData) :?> Region array) [|BC; Alberta|] ""
+        Expect.equal ((parseFSON typeof<DU array> duData) :?> DU array) [|One; Two|] ""
     ]
 
     testList "Special Cases" [
-      ptestCase "non sep DU List" <| fun _ -> 
-        Expect.equal ((parseFSON typeof<Region list> "BC Alberta") :?> Region list) [BC; Alberta] ""
+      ptestCase "Non sep DU List" <| fun _ -> 
+        Expect.equal ((parseFSON typeof<DU list> "One Two") :?> DU list) [One; Two] ""
     ]
   ]
 
+
+type Region = 
+    | BC | Alberta | Canada
+let regionsData = "
+  - BC
+  - Alberta   "
+
+type Address = 
+    {Street: string;
+    City: string; 
+    Region: Region; 
+    Postal: string option;
+    Country: string;}
+let addr = {
+  Street = "245 West Howe";
+  City = "Vancouver";
+  Region = BC;
+  Postal = Some("V68 5R3");
+  Country = "Canada"}
+let addrData = " 
+  Street: 245 West Howe 
+  City: Vancouver 
+  Region: BC 
+  Postal: V68 5R3
+  Country: Canada 
+ "
+
+  
+[<Tests>]
+let tests2 =
+  testList "CompositeTypes" [
+    testCase "Parse Address" <| fun _ ->
+      let address = (parseFSON typeof<Address> addrData) :?> Address
+      Expect.isTrue (address = addr) ""
+  ]
 
   
