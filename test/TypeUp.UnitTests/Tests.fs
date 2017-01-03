@@ -45,16 +45,16 @@ let tests =
       testCase "byte" <| fun _ -> Expect.equal ((parseFSON typeof<byte> "12") :?> byte)  12uy ""
       testCase "sbyte" <| fun _ -> Expect.equal ((parseFSON typeof<sbyte> "12") :?> sbyte)  12y ""
 
+      testCase "char" <| fun _ -> Expect.equal ((parseFSON typeof<char> "a") :?> char)  'a' ""
       testCase "string" <| fun _ -> Expect.equal ((parseFSON typeof<string> "foo") :?> string)  "foo" ""
       testCase "string empty" <| fun _ -> Expect.equal ((parseFSON typeof<string> "") :?> string)  "" ""
       testCase "string only whitespace" <| fun _ -> Expect.equal ((parseFSON typeof<string> "  ") :?> string)  "" ""
 
-
-      testCase "IP Address" <| fun _ -> Expect.equal ((parseFSON typeof<IPAddress> " 127.0.0.1 ") :?> IPAddress)  (IPAddress.Parse "127.0.0.1")  ""
-      testCase "Guid" <| fun _ -> Expect.equal ((parseFSON typeof<Guid> " 872ccb13-2e12-4eec-a2f5-ab64b3652b1c ") :?> Guid)  (Guid.Parse "872ccb13-2e12-4eec-a2f5-ab64b3652b1c") ""
-      testCase "MailAddress" <| fun _ -> Expect.equal ((parseFSON typeof<MailAddress> " bob@aaa.com ") :?> MailAddress)  (MailAddress.Parse "bob@aaa.com") ""
-      testCase "URL" <| fun _ -> Expect.equal ((parseFSON typeof<Uri> " http://something.com ") :?> Uri)  (Uri.Parse "http://something.com") ""
       testCase "DateTime" <| fun _ -> Expect.equal ((parseFSON typeof<DateTime> " feb 1, 2016 ") :?> DateTime)  (DateTime.Parse "Feb 1, 2016") ""
+      testCase "Guid" <| fun _ -> Expect.equal ((parseFSON typeof<Guid> " 872ccb13-2e12-4eec-a2f5-ab64b3652b1c ") :?> Guid)  (Guid.Parse "872ccb13-2e12-4eec-a2f5-ab64b3652b1c") ""
+      testCase "Uri" <| fun _ -> Expect.equal ((parseFSON typeof<Uri> " http://something.com ") :?> Uri)  (Uri.Parse "http://something.com") ""
+      testCase "IP Address" <| fun _ -> Expect.equal ((parseFSON typeof<IPAddress> " 127.0.0.1 ") :?> IPAddress)  (IPAddress.Parse "127.0.0.1")  ""
+      testCase "MailAddress" <| fun _ -> Expect.equal ((parseFSON typeof<MailAddress> " bob@aaa.com ") :?> MailAddress)  (MailAddress.Parse "bob@aaa.com") ""
     ]
 
     testList "Records" [
