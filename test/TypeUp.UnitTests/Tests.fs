@@ -1,5 +1,9 @@
 module Tests
 
+open System
+open System.Net
+open System.Net.Mail
+
 open Expecto
 open FSONParser
 
@@ -30,6 +34,9 @@ let tests =
       testCase "string only whitespace" <| fun _ -> Expect.equal ((parseFSON typeof<string> "  ") :?> string)  "" ""
 
       testCase "int32" <| fun _ -> Expect.equal ((parseFSON typeof<int32> " 12 ") :?> int32)  12 ""
+
+      testCase "IP Address" <| fun _ -> Expect.equal ((parseFSON typeof<IPAddress> " 127.0.0.1 ") :?> IPAddress)  (IPAddress.Parse "127.0.0.1")  ""
+      testCase "Guid" <| fun _ -> Expect.equal ((parseFSON typeof<Guid> " 872ccb13-2e12-4eec-a2f5-ab64b3652b1c ") :?> Guid)  (Guid.Parse "872ccb13-2e12-4eec-a2f5-ab64b3652b1c") ""
     ]
 
     testList "Records" [
