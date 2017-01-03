@@ -41,6 +41,29 @@ let tests =
     testList "Unions" [
       testCase "zero field DU" <| fun _ -> Expect.equal ((parseFSON typeof<Region> " BC ") :?> Region)  Region.BC ""
     ]
+
+    testList "Lists" [
+      testCase "DU List" <| fun _ -> 
+        let data = "
+          - BC
+          - Alberta   "
+        Expect.equal ((parseFSON typeof<Region list> data) :?> Region list) [BC; Alberta] ""
+
+      testCase "String List" <| fun _ -> 
+        let data = "
+          - BC
+          - Alberta   "
+        Expect.equal ((parseFSON typeof<string list> data) :?> string list) ["BC"; "Alberta"] ""
+    ]
+
+    testList "Other Collections]" [
+      testCase "DU Array" <| fun _ -> 
+        let data = "
+          - BC
+          - Alberta   "
+        Expect.equal ((parseFSON typeof<Region array> data) :?> Region array) [|BC; Alberta|] ""
+    ]
+
   ]
 
 

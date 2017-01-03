@@ -136,7 +136,7 @@ and parray (t : Type) =
     let elementT = t.GetElementType()
     let toArrayT (elements : obj list)  =
         let arrayT = Array.CreateInstance(elementT, elements.Length)
-        for i = 0 to (elements.Length - 1) do
+        for i = (elements.Length - 1) downto 0 do
             arrayT.SetValue(elements.[i], i)
         arrayT
 
@@ -149,7 +149,7 @@ and plist (t : Type) =
             cons head  state elementT
         elements |> List.fold folder (empty elementT)
 
-    many (pelement elementT)|>>toListT|>>box
+    many (pelement elementT)|>>List.rev|>>toListT|>>box
 
 and ptype(t : Type)  =
     let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
