@@ -1,4 +1,4 @@
-#r @"..\build\FSONParser.dll"
+#r @"../build/FSONParser.dll"
 
 open FSONParser
 
