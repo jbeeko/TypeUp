@@ -2,8 +2,8 @@
 //https://gist.github.com/impworks/3772212
 //http://stackoverflow.com/questions/20006049/recursive-descent-parser-with-indentation-and-backtracking/20176466
 
-#r @"..\..\packages\FParsec\lib\net40-client\FParsecCS.dll"
-#r @"..\..\packages\FParsec\lib\net40-client\FParsec.dll"
+#r @"..\..\..\packages\FParsec\lib\net40-client\FParsecCS.dll"
+#r @"..\..\..\packages\FParsec\lib\net40-client\FParsec.dll"
 open FParsec
 open System.Collections.Generic
 
