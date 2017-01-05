@@ -1,6 +1,6 @@
-#r @"..\..\build\FParsecCS.dll"
-#r @"..\..\build\FParsec.dll"
-#load @".\FSONParser.fs"
+#r @"../../build/FParsecCS.dll"
+#r @"../../build/FParsec.dll"
+#load @"./FSONParser.fs"
 open FSONParser
 open FParsec
 
