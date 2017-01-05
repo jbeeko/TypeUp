@@ -92,7 +92,4 @@ Holder:
 
 
 let contract = (parseFSON typeof<Contract> data) :?> Contract
-match contract.Holder with
-    | Person p -> p.Name
-    | Company c -> c.Name
 
