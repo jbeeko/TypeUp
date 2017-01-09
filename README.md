@@ -92,7 +92,7 @@ The following .Net types are implements as primatives. In each case a string rep
 **Other primatives:** [DateTime](https://msdn.microsoft.com/en-us/library/system.datetime(v=vs.110).aspx), [Guid](https://msdn.microsoft.com/en-us/library/system.guid(v=vs.110).aspx), [IPAddress](https://msdn.microsoft.com/en-us/library/system.net.ipaddress(v=vs.110).aspx), [Uri](https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx), [MailAddress](https://msdn.microsoft.com/en-us/library/system.net.mail.mailaddress(v=vs.110).aspx)
 
 
-##FSON Limitations
+##TYUP Limitations
 A list of limitations of TYUP. Where these are by design that is indicated. Others should perhaps be lifted.
 
 ### No Multi Field Union Types - Maybe
