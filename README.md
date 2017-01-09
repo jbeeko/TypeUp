@@ -3,7 +3,7 @@ Functional programming promises to increase software reliability through type sa
 
 TypeUp consists of an object notation (tyup) and a matching parser. TypeUp lets you represent a wide range of arbitrary FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. Supported types are Records, Options, Discriminate Unions, Lists Arrays and a large number of primative types.
 
-TypeUp hopes to be useful where constrained data data or documents need to be specified in a text file. For example project configuration files, blog posts, contracts, service definition documents. 
+TypeUp hopes to be useful where constrained data or documents need to be specified in a text file. For example project configuration files, blog posts, contracts, service definition documents. 
 
 For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching tyup dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
 
