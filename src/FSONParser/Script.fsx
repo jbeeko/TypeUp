@@ -1,7 +1,8 @@
-#r @"..\..\build\FParsecCS.dll"
-#r @"..\..\build\FParsec.dll"
-#load @".\FSONParser.fs"
+#r @"../../build/FParsecCS.dll"
+#r @"../../build/FParsec.dll"
+#load @"./FSONParser.fs"
 open FSONParser
+open FParsec
 
 // File for misc scratch pad stuff
 
@@ -21,3 +22,5 @@ Region: BC
 Country: Canada"
 
 let addr = (parseFSON typeof<Address> data) :?> Address
+
+

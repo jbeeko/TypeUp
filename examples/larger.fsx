@@ -1,6 +1,6 @@
-#r @"..\build\FParsecCS.dll"
-#r @"..\build\FParsec.dll"
-#load @"..\src\FSONParser\FSONParser.fs"
+#r @"../build/FParsecCS.dll"
+#r @"../build/FParsec.dll"
+#load @"../src/FSONParser/FSONParser.fs"
 
 open System
 open System.Net
