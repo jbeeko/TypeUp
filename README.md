@@ -1,11 +1,11 @@
 # TypeUp
 Functional programming promises to increase software reliability through type safety. However the input to to many programms is still specified though untyped files such as json. TypeUp addresses this. 
 
-TypeUp consists of an object notation (tyup) and a matching parser. TypeUp lets you represent a wide range of arbitrary FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. Supported types are Records, Options, Discriminate Unions, Lists Arrays and a large number of primative types.
+TypeUp consists of an object notation (FSON) and a matching parser. TypeUp lets you represent a wide range of arbitrary FSharp types in a simple text format and then parse them into matching FSharp types on demand. Effectivly FSharp provides the data definition language for a simple human readable object notation. Supported types are Records, Options, Discriminate Unions, Lists Arrays and a large number of primative types.
 
 TypeUp hopes to be useful where constrained data or documents need to be specified in a text file. For example project configuration files, blog posts, contracts, service definition documents. 
 
-For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching tyup dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
+For the FSharp developer using TypeUp is very simple and direct. Most FSharp domain models will define a valid matching FSON dialect that can be used to specify data directly. There is no need to parse another representation such as JSON and then translate the parsed structure into the FSharp types. 
 
 Here, `../../examples/small.fsx`,  is an small example (a larger one is [here](#larger-example)) of defining a type, creating some data and parsing it. 
 
@@ -66,7 +66,7 @@ Value was either too large or too small for an Int16.
 Missing fields, extra fields, wrong types etc result in similar errors. 
 
 
-## TYUP Language
+## FSON Language
 
 ### Why Another Object Notation Language?
 
@@ -92,8 +92,8 @@ The following .Net types are implements as primatives. In each case a string rep
 **Other primatives:** [DateTime](https://msdn.microsoft.com/en-us/library/system.datetime(v=vs.110).aspx), [Guid](https://msdn.microsoft.com/en-us/library/system.guid(v=vs.110).aspx), [IPAddress](https://msdn.microsoft.com/en-us/library/system.net.ipaddress(v=vs.110).aspx), [Uri](https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx), [MailAddress](https://msdn.microsoft.com/en-us/library/system.net.mail.mailaddress(v=vs.110).aspx)
 
 
-##TYUP Limitations
-A list of limitations of TYUP. Where these are by design that is indicated. Others should perhaps be lifted.
+##FSON Limitations
+A list of limitations of FSON. Where these are by design that is indicated. Others should perhaps be lifted.
 
 ### No Multi Field Union Types - Maybe
 Union types with multiple fields are not supported. In principle it shoud be possible to support multiple fields. Those with labels would be supported like in the case of records. Unlabled fields would need to be designated using say a '-'.
@@ -108,7 +108,7 @@ type Person =
     {Name : string;
     Occupations : Occupation list}
 ```
-The TYUP could be written as 
+The FSON could be written as 
 ```
 Name: Bill
 Occupations: Cook Painter
@@ -153,7 +153,7 @@ This change will add a lot of complexity that may not be worth while. The more a
 The supported types are limited to the FSharp types. There is no support for classes and other OO types. This probably limits the appeal of TypeUp to c# developers. 
 
 ### Fixed Field Order - By Design
-Fields in TYUP must be provided in the order they are declared in the type begining parsed. This definitly simplifies the parser. But it also gives a consistent expectation when entering data. If Address is defined as
+Fields in FSON must be provided in the order they are declared in the type begining parsed. This definitly simplifies the parser. But it also gives a consistent expectation when entering data. If Address is defined as
 ```
 type Address = 
     {Street: string;
@@ -161,7 +161,7 @@ type Address =
     Postal: string option;
     Country: string;}
 ```
-Then the TYUP will always be written as
+Then the FSON will always be written as
 ```
 Street: 3345 West 14th
 City: Vancouver
@@ -172,7 +172,7 @@ Country: Canada
 Where the postal code is optional. Enforcing the order is desirable. There is no purpose to letting users enter this in an arbitrary order. 
 
 ### No Ad-hoc Comments - By Design
-Comments are widely used in configuration files. They are not supported by TYUP for three reasons:
+Comments are widely used in configuration files. They are not supported by FSON for three reasons:
 
 1. Adding support for them will probably require introducing either delimaters or escape characters. For example if `\\` was to designate line end comments then the field `WebSite: https:\\mysite.com` will not be parsed correctly. This will make the language harder to user for novices. 
 2. Since ad-hoc comments a not part of the model they will be lost when recreating the text from from the parsed data. This limits their usefulness.
@@ -181,7 +181,7 @@ Comments are widely used in configuration files. They are not supported by TYUP 
 
 ## Roadmap
 
-### TYUP Parser
+### FSON Parser
 The current implementation is very simple. It walks the provided type from the top down in the order of declaration and uses `FSharpReflection` to build the instance. Parsing is very simple (not even really parsing) because the types to expect are know. For exmample when encountering a field defined to be `double` it is sufficient to take all the characters up to the next field and call `Double.Parse`. If it works great, if not an error can be show. 
 
 Combinators from the library [FParsec](http://www.quanttec.com/fparsec/) are used to string the parsing together. 
