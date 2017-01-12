@@ -132,11 +132,7 @@ and punion (t : Type)  =
     punioninfo t >>= punioncase 
 
 and pelement (t : Type) =
-    if FSharpType.IsUnion t
-        //then spaces>>.(ptype t <!> "element")
-        //then spaces>>.attempt(pstring "-")>>.(ptype t <!> "element")
-        then spaces>>.pstring "-">>.(ptype t <!> "element")
-        else spaces>>.pstring "-">>.(ptype t <!> "element")
+    spaces>>.pstring "-">>.(ptype t <!> "element")
 
 and parray (t : Type) =
     let elementT = t.GetElementType()
