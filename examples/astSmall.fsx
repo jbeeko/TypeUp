@@ -1,8 +1,8 @@
 #r @"../build/FParsecCS.dll"
 #r @"../build/FParsec.dll"
-#load @"../src/FSONParser/FSONParser.fs"
+#load @"../src/FSONParser/fsonAST.fs"
 
-open FSONParser
+open FsonAST
 
 type Jurisdiction = 
     | BC | Alberta | Canada
@@ -10,8 +10,8 @@ type Jurisdiction =
 type Address = 
     {Number: int16;
     Street: string;
-    City: string; Region: Jurisdiction; 
-    Postal: string option;
+    City: string; Region: string; 
+    Postal: string;
     Country: string;}
 
 let data = "
@@ -19,13 +19,15 @@ let data = "
     Street: 245 West Howe
     City: Vancouver
     Region: BC
+    Postal: V6R2W5
     Country: Canada
 -   Number: 3670
     Street: 245 West Howe
     City: Vancouver
     Region: BC
+    Postal: V6R2W5
     Country: Canada
 
 "
 
-let address = (parseFSON typeof<Address list> data) :?> Address list
+let address = parseFSON typeof<Address list> data

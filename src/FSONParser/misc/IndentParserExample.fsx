@@ -1,6 +1,7 @@
 //https://bitbucket.org/fparsec/main/wiki/Parsing%20indentation-based%20syntax%20with%20FParsec
 //https://gist.github.com/impworks/3772212
 //http://stackoverflow.com/questions/20006049/recursive-descent-parser-with-indentation-and-backtracking/20176466
+//https://gist.github.com/CRogers/6011424 debugging 
 
 #r @"..\..\..\packages\FParsec\lib\net40-client\FParsecCS.dll"
 #r @"..\..\..\packages\FParsec\lib\net40-client\FParsec.dll"
