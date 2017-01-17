@@ -10,24 +10,18 @@ type Jurisdiction =
 type Address = 
     {Number: int16;
     Street: string;
-    City: string; Region: string; 
+    City: string; 
+    Region: Jurisdiction array; 
     Postal: string;
     Country: string;}
 
 let data = "
--   Number: 3670
-    Street: 245 West Howe
-    City: Vancouver
-    Region: BC
-    Postal: V6R2W5
-    Country: Canada
--   Number: 3670
-    Street: 245 West Howe
-    City: Vancouver
-    Region: BC
-    Postal: V6R2W5
-    Country: Canada
+Number: 3670
+Street: 245 West Howe
+City: Vancouver
+Region: 
+    - BC
+Postal: V6R2W5
+Country: Canada"
 
-"
-
-let address = parseFSON typeof<Address list> data
+let address = parseFSON typeof<Address> data
