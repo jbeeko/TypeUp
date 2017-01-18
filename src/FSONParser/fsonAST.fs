@@ -22,11 +22,6 @@ type FSharpType with
 type FSharpType with
     static member IsList (t : Type) = t.Name = "FSharpList`1"
 
-type ParseState = {
-    Line: int;
-    Col: int;    
-}
-
 type Node = 
     | Primitive of Primitive 
     | Field of Field 

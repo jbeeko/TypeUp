@@ -12,7 +12,7 @@ type Address =
     Street: string;
     City: string; 
     Region: Jurisdiction array; 
-    Postal: string;
+    Postal: string option;
     Country: string;}
 
 let data = "
