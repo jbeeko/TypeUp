@@ -81,6 +81,13 @@ let rec pfield (f: Reflection.PropertyInfo) =
         Field {Name = n; Type = f.PropertyType; IsOption = false; Value = v; Position = p}
     pipe3 getPosition (pstring (f.Name + ":" )) (ptype f.PropertyType) field
 
+    // if FSharpType.IsOption f.PropertyType then
+    //     let t = f.PropertyType.GenericTypeArguments |> Seq.exactlyOne
+    //     ((pfieldName f>>.ptype t |>> some) <|>% (none t)) |>> box
+    // else 
+    //     pfieldName f>>.ptype f.PropertyType
+
+
 and precord t =
     let record p v = 
        Record {Type = t; Fields = v; Position = p}
