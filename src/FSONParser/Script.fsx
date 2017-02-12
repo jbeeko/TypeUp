@@ -36,3 +36,16 @@ typeof<string>.GetMethods()
     |> Array.filter (fun x -> x.IsStatic)
     |> Array.map (fun x -> x.Name)
 
+
+type CustomParse2 =
+  | Case1
+  | Case2
+  static member FSONParse(str: string) =
+    match str with
+      | "Case 1" -> Case1
+      | "Case 2" -> Case2
+      | _ -> failwith "Bad Custom Parse"
+
+(parseFSON typeof<CustomParse2> "Case 2")
+
+((parseFSON typeof<CustomParse2> "Case 1") :?> CustomParse2)

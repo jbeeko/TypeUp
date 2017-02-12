@@ -70,8 +70,8 @@ type String with
 type Uri with
     static member Parse str = Uri(str)
 
-let customFromString (t: Type) str : obj
-    = upcast str
+let customFromString (t: Type) str : obj =
+    box (t.InvokeMember("FSONParse", BindingFlags.InvokeMethod, null, null, [|box str|]))
 
 let pcustom t =
     let trim (str : string) =
@@ -82,26 +82,26 @@ let primFromString (t:  Type) str : obj =
     // (t.InvokeMember("Parse", BindingFlags.InvokeMethod, null, null, [|box str|]))
 
     match t.FullName with
-    |"System.Int16" -> upcast Int16.Parse(str)
-    |"System.Int32" -> upcast Int32.Parse(str)
-    |"System.Int64" -> upcast Int64.Parse(str)
-    |"System.UInt16" -> upcast UInt16.Parse(str)
-    |"System.UInt32" -> upcast UInt32.Parse(str)
-    |"System.UInt64" -> upcast UInt64.Parse(str)
-    |"System.Single" -> upcast Single.Parse(str)
-    |"System.Double" -> upcast Double.Parse(str)
-    |"System.Decimal" -> upcast Decimal.Parse(str)
-    |"System.Boolean" -> upcast Boolean.Parse(str)
-    |"System.Byte" -> upcast Byte.Parse(str)
-    |"System.SByte" -> upcast SByte.Parse(str)
-    |"System.Char" -> upcast Char.Parse(str)
+    |"System.Int16" -> box (Int16.Parse(str))
+    |"System.Int32" -> box (Int32.Parse(str))
+    |"System.Int64" -> box (Int64.Parse(str))
+    |"System.UInt16" -> box (UInt16.Parse(str))
+    |"System.UInt32" -> box (UInt32.Parse(str))
+    |"System.UInt64" -> box (UInt64.Parse(str))
+    |"System.Single" -> box (Single.Parse(str))
+    |"System.Double" -> box (Double.Parse(str))
+    |"System.Decimal" -> box (Decimal.Parse(str))
+    |"System.Boolean" -> box (Boolean.Parse(str))
+    |"System.Byte" -> box (Byte.Parse(str))
+    |"System.SByte" -> box (SByte.Parse(str))
+    |"System.Char" -> box (Char.Parse(str))
 
-    |"System.String" -> upcast str
-    |"System.DateTime" -> upcast DateTime.Parse str
-    |"System.Guid" -> upcast Guid.Parse str
-    |"System.Uri" -> upcast Uri.Parse str
-    |"System.Net.IPAddress" -> upcast IPAddress.Parse str
-    |"System.Net.Mail.MailAddress" -> upcast MailAddress.Parse str
+    |"System.String" -> box str
+    |"System.DateTime" -> box (DateTime.Parse str)
+    |"System.Guid" -> box (Guid.Parse str)
+    |"System.Uri" -> box (Uri.Parse str)
+    |"System.Net.IPAddress" -> box (IPAddress.Parse str)
+    |"System.Net.Mail.MailAddress" -> box (MailAddress.Parse str)
     |_ -> failwith "Unsupported primative type"
 
 let pprimative t =
@@ -185,12 +185,12 @@ and ptype(t : Type)  =
     match t with
     | EMail true | GUID true | URL true | IP true
     | Primative true -> pprimative t
-    
+    | Custom true -> pcustom t
+
     | List true -> plist t
     | Array true -> parray t
     | Record true -> precord t
     | Union true -> punion t
-    | Custom true -> pcustom t
     | _ -> fail "Unsupported type"
 
 let parseFSON t fson = 

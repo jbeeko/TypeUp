@@ -17,6 +17,16 @@ let duData = "
   - One
   - Two   "
 
+type CustomParse =
+  | Case1
+  | Case2
+  static member FSONParse(str: String) =
+    match str with
+      | "Case 1" -> Case1
+      | "Case 2" -> Case2
+      | _ -> failwith "Bad Custom Parse"
+
+
 [<Tests>]
 let tests1 =
   testList "UnitTests" [
@@ -48,6 +58,12 @@ let tests1 =
       testCase "IP Address" <| fun _ -> Expect.equal ((parseFSON typeof<IPAddress> " 127.0.0.1 ") :?> IPAddress)  (IPAddress.Parse "127.0.0.1")  ""
       testCase "MailAddress" <| fun _ -> Expect.equal ((parseFSON typeof<MailAddress> " bob@aaa.com ") :?> MailAddress)  (MailAddress.Parse "bob@aaa.com") ""
     ]
+
+    testList "Custom Parsing]" [
+      testCase "Success Custom" <| fun _ ->  Expect.equal ((parseFSON typeof<CustomParse> "Case 1") :?> CustomParse)  Case1 ""
+      testCase "Success Custom" <| fun _ ->  Expect.equal ((parseFSON typeof<CustomParse> "Case 2") :?> CustomParse)  Case2 ""
+    ]
+
 
     testList "Records" [
       testCase "Simple Record" <| fun _ ->
