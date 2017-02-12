@@ -3,6 +3,7 @@
 #load @"./FSONParser.fs"
 open FSONParser
 open FParsec
+open System.Reflection
 
 // File for misc scratch pad stuff
 
@@ -21,6 +22,17 @@ City: Vancouver
 Region: BC
 Country: Canada"
 
-let addr = (parseFSON typeof<Address> data) :?> Address
 
+
+typeof<string>.InvokeMember("Parse", BindingFlags.InvokeMethod, null, null, [|box "12"|])
+
+
+parseFSON typeof<int16> "12"
+
+typeof<string>.GetMethod("IsNullOrWhiteSpace")
+"String".GetType() = typeof<string>
+
+typeof<string>.GetMethods() 
+    |> Array.filter (fun x -> x.IsStatic)
+    |> Array.map (fun x -> x.Name)
 

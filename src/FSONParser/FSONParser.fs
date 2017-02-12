@@ -1,6 +1,7 @@
 module FSONParser
 
 open System
+open System.Reflection
 open FParsec
 open FSharp.Reflection
 open System.Net
@@ -63,10 +64,23 @@ type FSharpType with
 type MailAddress with
     static member Parse str = MailAddress(str)
 
+type String with
+    static member Parse(str) = str
+
 type Uri with
     static member Parse str = Uri(str)
 
+let customFromString (t: Type) str : obj
+    = upcast str
+
+let pcustom t =
+    let trim (str : string) =
+        str.Trim()
+    mayThrow(restOfLine false)|>>trim|>>(customFromString t)
+
 let primFromString (t:  Type) str : obj =
+    // (t.InvokeMember("Parse", BindingFlags.InvokeMethod, null, null, [|box str|]))
+
     match t.FullName with
     |"System.Int16" -> upcast Int16.Parse(str)
     |"System.Int32" -> upcast Int32.Parse(str)
@@ -81,6 +95,7 @@ let primFromString (t:  Type) str : obj =
     |"System.Byte" -> upcast Byte.Parse(str)
     |"System.SByte" -> upcast SByte.Parse(str)
     |"System.Char" -> upcast Char.Parse(str)
+
     |"System.String" -> upcast str
     |"System.DateTime" -> upcast DateTime.Parse str
     |"System.Guid" -> upcast Guid.Parse str
@@ -154,26 +169,28 @@ and plist (t : Type) =
     many (pelement elementT)|>>List.rev|>>toListT|>>box
 
 and ptype(t : Type)  =
-    let (|Record|_|) t = if FSharpType.IsRecord(t) then Some(t)  else None
-    let (|Union|_|) t = if FSharpType.IsUnion(t) then Some(t) else None
-    let (|List|_|) t = if FSharpType.IsList(t) then Some(t) else None
-    let (|Array|_|) t = if FSharpType.IsArray(t) then Some(t) else None
+    let (|Custom|) (t:Type) = not(isNull(t.GetMethod("FSONParse")))
+    let (|Record|) t = FSharpType.IsRecord(t)
+    let (|Union|) t = FSharpType.IsUnion(t)
+    let (|List|) t = FSharpType.IsList(t)
+    let (|Array|) t = FSharpType.IsArray(t)
     
-    let (|EMail|_|) t = if t = typeof<MailAddress> then Some(t) else None        
-    let (|URL|_|) t = if t = typeof<Uri> then Some(t) else None        
-    let (|GUID|_|) t = if t = typeof<Guid> then Some(t) else None        
-    let (|IP|_|) t = if t = typeof<IPAddress> then Some(t) else None        
-    let (|Primative|_|) t = if Type.GetTypeCode(t) <> TypeCode.Object then Some(t) else None
+    let (|EMail|) t = t = typeof<MailAddress>        
+    let (|URL|) t = t=  typeof<Uri>        
+    let (|GUID|) t = t = typeof<Guid>        
+    let (|IP|) t = t = typeof<IPAddress>        
+    let (|Primative|) t = Type.GetTypeCode(t) <> TypeCode.Object
 
     spaces >>.
     match t with
-    | EMail t | GUID t | URL t | IP t
-    | Primative t -> pprimative t
+    | EMail true | GUID true | URL true | IP true
+    | Primative true -> pprimative t
     
-    | List t -> plist t
-    | Array t -> parray t
-    | Record t -> precord t
-    | Union t -> punion t
+    | List true -> plist t
+    | Array true -> parray t
+    | Record true -> precord t
+    | Union true -> punion t
+    | Custom true -> pcustom t
     | _ -> fail "Unsupported type"
 
 let parseFSON t fson = 
